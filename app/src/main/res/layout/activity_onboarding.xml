@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/onboardingScreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_onboarding"
+    android:orientation="vertical"
+    android:padding="28dp">
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center|bottom"
+        android:text="Pozdravljeni!"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/subtitleText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_marginTop="18dp"
+        android:text="Kako ti je ime?"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/nameInput"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="18dp"
+        android:hint="Vnesi svoje ime"
+        android:padding="14dp"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#BDBDBD" />
+
+    <RadioGroup
+        android:id="@+id/experienceGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:visibility="gone">
+
+        <RadioButton
+            android:id="@+id/pro"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="#222222"
+            android:buttonTint="#FFA07A"
+            android:paddingStart="16dp"
+            android:text="Profesionalec"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/recreational"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginBottom="10dp"
+            android:background="#222222"
+            android:buttonTint="#FFA07A"
+            android:paddingStart="16dp"
+            android:text="Rekreativec"
+            android:textColor="#FFFFFF" />
+
+        <RadioButton
+            android:id="@+id/beginner"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="#222222"
+            android:buttonTint="#FFA07A"
+            android:paddingStart="16dp"
+            android:text="Začetnik"
+            android:textColor="#FFFFFF" />
+    </RadioGroup>
+
+    <ProgressBar
+        android:id="@+id/weatherProgress"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginTop="24dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/nextButton"
+        android:layout_width="140dp"
+        android:layout_height="54dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="40dp"
+        android:text="Naprej" />
+
+    <TextView
+        android:id="@+id/dotsText"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:gravity="center"
+        android:text="●  ○  ○"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+</LinearLayout>
