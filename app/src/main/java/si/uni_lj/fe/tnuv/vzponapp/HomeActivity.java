@@ -91,6 +91,9 @@ public class HomeActivity extends AppCompatActivity {
         Button profileButton =
                 findViewById(R.id.profileButton);
 
+        TextView navMap = findViewById(R.id.navMap);
+        TextView navProfile = findViewById(R.id.navProfile);
+
         showTrail();
 
         imagePlaceholder.setOnClickListener(v -> {
@@ -152,6 +155,16 @@ public class HomeActivity extends AppCompatActivity {
 
             startActivity(intent);
 
+        });
+
+        navProfile.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
+            startActivity(intent);
+        });
+
+        navMap.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, MapActivity.class);
+            startActivity(intent);
         });
 
     }

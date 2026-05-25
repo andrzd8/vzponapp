@@ -119,7 +119,7 @@ public class OnboardingActivity extends AppCompatActivity {
                         );
 
                 prefs.edit()
-                        .putBoolean("onboarding_done", true)
+                        .putBoolean("onboarding_done", false)
                         .putString("name", userName)
                         .putString("experience", experience)
                         .apply();
