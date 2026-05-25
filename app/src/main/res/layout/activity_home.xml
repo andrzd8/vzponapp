@@ -117,15 +117,6 @@
             android:layout_height="50dp"
             android:text="→" />
 
-        <Button
-            android:id="@+id/profileButton"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="24dp"
-            android:backgroundTint="#FF9A7A"
-            android:text="Profil"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold" />
     </LinearLayout>
 
     <LinearLayout

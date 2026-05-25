@@ -1,10 +1,10 @@
 package si.uni_lj.fe.tnuv.vzponapp;
 
-import android.os.Bundle;
 import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,41 +12,7 @@ public class HomeActivity extends AppCompatActivity {
 
     int currentTrail = 0;
 
-    String[] titles = {
-            "Voje - Uskovnica",
-            "Velika Planina",
-            "Slap Savica"
-    };
-
-    String[] descriptions = {
-            "Zelo sončno, rahlo vetrovno, idealno za hojo v hribe.",
-            "Lepa panoramska tura za rekreativce.",
-            "Krajša in lažja pot za začetnike."
-    };
-
-    String[] distances = {
-            "2.3 KM",
-            "8.5 KM",
-            "4.1 KM"
-    };
-
-    String[] weather = {
-            "varno",
-            "previdno",
-            "varno"
-    };
-
-    String[] difficulty = {
-            "težko",
-            "srednje",
-            "lahko"
-    };
-
-    int[] imageColors = {
-            0xFFDDEEFF,
-            0xFFE5F5D5,
-            0xFFFFE0D2
-    };
+    Trail[] trails = TrailRepository.trails;
 
     TextView trailTitle;
     TextView trailDescription;
@@ -56,105 +22,55 @@ public class HomeActivity extends AppCompatActivity {
     TextView imagePlaceholder;
     TextView cardCounter;
 
+    int[] imageColors = {
+            0xFFDDEEFF,
+            0xFFE5F5D5,
+            0xFFFFE0D2,
+            0xFFE8DDF5,
+            0xFFFFF4D6
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        trailTitle =
-                findViewById(R.id.trailTitle);
+        trailTitle = findViewById(R.id.trailTitle);
+        trailDescription = findViewById(R.id.trailDescription);
+        distanceText = findViewById(R.id.distanceText);
+        weatherText = findViewById(R.id.weatherText);
+        difficultyText = findViewById(R.id.difficultyText);
+        imagePlaceholder = findViewById(R.id.imagePlaceholder);
+        cardCounter = findViewById(R.id.cardCounter);
 
-        trailDescription =
-                findViewById(R.id.trailDescription);
-
-        distanceText =
-                findViewById(R.id.distanceText);
-
-        weatherText =
-                findViewById(R.id.weatherText);
-
-        difficultyText =
-                findViewById(R.id.difficultyText);
-
-        imagePlaceholder =
-                findViewById(R.id.imagePlaceholder);
-
-        cardCounter =
-                findViewById(R.id.cardCounter);
-
-        Button previousButton =
-                findViewById(R.id.previousButton);
-
-        Button nextTrailButton =
-                findViewById(R.id.nextTrailButton);
-
-        Button profileButton =
-                findViewById(R.id.profileButton);
+        Button previousButton = findViewById(R.id.previousButton);
+        Button nextTrailButton = findViewById(R.id.nextTrailButton);
 
         TextView navMap = findViewById(R.id.navMap);
         TextView navProfile = findViewById(R.id.navProfile);
 
         showTrail();
 
-        imagePlaceholder.setOnClickListener(v -> {
-
-            Intent intent =
-                    new Intent(
-                            HomeActivity.this,
-                            TrailDetailsActivity.class
-                    );
-
-            intent.putExtra(
-                    "trail_name",
-                    titles[currentTrail]
-            );
-
-            intent.putExtra(
-                    "trail_distance",
-                    distances[currentTrail]
-            );
-
-            intent.putExtra(
-                    "trail_weather",
-                    weather[currentTrail]
-            );
-
-            startActivity(intent);
-
-        });
+        imagePlaceholder.setOnClickListener(v -> openTrailMap());
 
         previousButton.setOnClickListener(v -> {
-
             currentTrail--;
 
             if (currentTrail < 0) {
-                currentTrail = titles.length - 1;
+                currentTrail = trails.length - 1;
             }
 
             showTrail();
         });
 
         nextTrailButton.setOnClickListener(v -> {
-
             currentTrail++;
 
-            if (currentTrail >= titles.length) {
+            if (currentTrail >= trails.length) {
                 currentTrail = 0;
             }
 
             showTrail();
-        });
-
-        profileButton.setOnClickListener(v -> {
-
-            Intent intent =
-                    new Intent(
-                            HomeActivity.this,
-                            ProfileActivity.class
-                    );
-
-            startActivity(intent);
-
         });
 
         navProfile.setOnClickListener(v -> {
@@ -164,45 +80,43 @@ public class HomeActivity extends AppCompatActivity {
 
         navMap.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MapActivity.class);
+
+            intent.putExtra("trail_index", currentTrail);
+
             startActivity(intent);
         });
-
     }
 
     private void showTrail() {
+        Trail trail = trails[currentTrail];
 
-        trailTitle.setText(
-                titles[currentTrail]
-        );
+        trailTitle.setText(trail.title);
+        trailDescription.setText(trail.description);
+        distanceText.setText(trail.distance);
+        weatherText.setText(trail.weather);
+        difficultyText.setText(trail.difficulty);
 
-        trailDescription.setText(
-                descriptions[currentTrail]
-        );
-
-        distanceText.setText(
-                distances[currentTrail]
-        );
-
-        weatherText.setText(
-                weather[currentTrail]
-        );
-
-        difficultyText.setText(
-                difficulty[currentTrail]
-        );
-
-        imagePlaceholder.setText(
-                titles[currentTrail]
-        );
+        imagePlaceholder.setText(trail.title);
 
         imagePlaceholder.setBackgroundColor(
-                imageColors[currentTrail]
+                imageColors[currentTrail % imageColors.length]
         );
 
         cardCounter.setText(
-                (currentTrail + 1)
-                        + " / "
-                        + titles.length
+                (currentTrail + 1) + " / " + trails.length
         );
     }
+
+    private void openTrailMap() {
+        Intent intent = new Intent(
+                HomeActivity.this,
+                MapActivity.class
+        );
+
+        intent.putExtra("trail_index", currentTrail);
+
+        startActivity(intent);
+    }
+
+
 }

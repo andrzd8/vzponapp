@@ -12,6 +12,16 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 
+import android.graphics.Color;
+
+import org.osmdroid.views.overlay.Polyline;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserFactory;
+
+import java.io.InputStream;
+import java.util.ArrayList;
+
 public class MapActivity extends AppCompatActivity {
 
     private MapView mapView;
@@ -36,6 +46,12 @@ public class MapActivity extends AppCompatActivity {
 
         mapView.getController().setZoom(8.0);
         mapView.getController().setCenter(sloveniaCenter);
+
+        int trailIndex = getIntent().getIntExtra("trail_index", 0);
+
+        Trail selectedTrail = TrailRepository.trails[trailIndex];
+
+        drawGpxTrack(selectedTrail.gpxFile);
 
         TextView navHome = findViewById(R.id.navHome);
         TextView navProfile = findViewById(R.id.navProfile);
@@ -63,5 +79,71 @@ public class MapActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         mapView.onPause();
+    }
+
+    private void drawGpxTrack(int gpxResourceId) {
+
+        ArrayList<GeoPoint> points = new ArrayList<>();
+
+        try {
+            InputStream inputStream =
+                    getResources().openRawResource(gpxResourceId);
+
+            XmlPullParserFactory factory =
+                    XmlPullParserFactory.newInstance();
+
+            XmlPullParser parser =
+                    factory.newPullParser();
+
+            parser.setInput(inputStream, null);
+
+            int eventType = parser.getEventType();
+
+            while (eventType != XmlPullParser.END_DOCUMENT) {
+
+                if (eventType == XmlPullParser.START_TAG) {
+
+                    if (parser.getName().equals("trkpt")) {
+
+                        double lat =
+                                Double.parseDouble(
+                                        parser.getAttributeValue(null, "lat")
+                                );
+
+                        double lon =
+                                Double.parseDouble(
+                                        parser.getAttributeValue(null, "lon")
+                                );
+
+                        points.add(
+                                new GeoPoint(lat, lon)
+                        );
+                    }
+                }
+
+                eventType = parser.next();
+            }
+
+            inputStream.close();
+
+            if (!points.isEmpty()) {
+
+                Polyline line = new Polyline();
+
+                line.setPoints(points);
+                line.setColor(Color.rgb(255, 154, 122));
+                line.setWidth(8f);
+
+                mapView.getOverlays().add(line);
+
+                mapView.getController().setZoom(14.0);
+                mapView.getController().setCenter(points.get(0));
+
+                mapView.invalidate();
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

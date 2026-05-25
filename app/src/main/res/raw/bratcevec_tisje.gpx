@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<gpx version="1.1" creator="GDAL 3.3.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ogr="http://osgeo.org/gdal" xmlns="http://www.topografix.com/GPX/1/1" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd">
+<metadata><bounds minlat="46.028317024000003" minlon="14.912866491000001" maxlat="46.034189472999998" maxlon="14.916163308000000"/></metadata>                  
+<trk>
+  <trkseg>
+    <trkpt lat="46.034189473" lon="14.912866491">
+        <ele>346.0</ele>
+    </trkpt>
+    <trkpt lat="46.033924433" lon="14.913074028">
+        <ele>358.0</ele>
+    </trkpt>
+    <trkpt lat="46.033743621" lon="14.913280596">
+        <ele>375.0</ele>
+    </trkpt>
+    <trkpt lat="46.033227243" lon="14.913736105">
+        <ele>407.0</ele>
+    </trkpt>
+    <trkpt lat="46.0330046" lon="14.914046877">
+        <ele>422.0</ele>
+    </trkpt>
+    <trkpt lat="46.032697714" lon="14.914543636">
+        <ele>445.0</ele>
+    </trkpt>
+    <trkpt lat="46.032432686" lon="14.914915566">
+        <ele>464.0</ele>
+    </trkpt>
+    <trkpt lat="46.032070353" lon="14.915143693">
+        <ele>477.0</ele>
+    </trkpt>
+    <trkpt lat="46.031749135" lon="14.915268613">
+        <ele>485.0</ele>
+    </trkpt>
+    <trkpt lat="46.031637499" lon="14.915309881">
+        <ele>487.0</ele>
+    </trkpt>
+    <trkpt lat="46.03138618" lon="14.915552453">
+        <ele>493.0</ele>
+    </trkpt>
+    <trkpt lat="46.031108049" lon="14.915641386">
+        <ele>500.0</ele>
+    </trkpt>
+    <trkpt lat="46.030982672" lon="14.91584799">
+        <ele>502.0</ele>
+    </trkpt>
+    <trkpt lat="46.030760613" lon="14.915895646">
+        <ele>508.0</ele>
+    </trkpt>
+    <trkpt lat="46.030581668" lon="14.915938738">
+        <ele>510.0</ele>
+    </trkpt>
+    <trkpt lat="46.030269173" lon="14.916013325">
+        <ele>517.0</ele>
+    </trkpt>
+    <trkpt lat="46.029851954" lon="14.916163308">
+        <ele>529.0</ele>
+    </trkpt>
+    <trkpt lat="46.029606203" lon="14.915874023">
+        <ele>535.0</ele>
+    </trkpt>
+    <trkpt lat="46.029352997" lon="14.9156486">
+        <ele>541.0</ele>
+    </trkpt>
+    <trkpt lat="46.029017425" lon="14.915594647">
+        <ele>540.0</ele>
+    </trkpt>
+    <trkpt lat="46.02879418" lon="14.915627031">
+        <ele>542.0</ele>
+    </trkpt>
+    <trkpt lat="46.028317024" lon="14.915802221">
+        <ele>556.0</ele>
+    </trkpt>
+  </trkseg>
+</trk>
+</gpx>
