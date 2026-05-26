@@ -38,45 +38,64 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#BDBDBD" />
 
-    <RadioGroup
+    <LinearLayout
         android:id="@+id/experienceGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="22dp"
+        android:orientation="vertical"
         android:visibility="gone">
 
-        <RadioButton
-            android:id="@+id/pro"
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="#222222"
-            android:buttonTint="#FFA07A"
-            android:paddingStart="16dp"
-            android:text="Profesionalec"
-            android:textColor="#FFFFFF" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-        <RadioButton
-            android:id="@+id/recreational"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginBottom="10dp"
-            android:background="#222222"
-            android:buttonTint="#FFA07A"
-            android:paddingStart="16dp"
-            android:text="Rekreativec"
-            android:textColor="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/expHiker"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#1A2E3F"
+                android:buttonTint="#FF9A7A"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="🥾  Pohodnik\nLahke in zahtevne markirane poti"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
 
-        <RadioButton
-            android:id="@+id/beginner"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="#222222"
-            android:buttonTint="#FFA07A"
-            android:paddingStart="16dp"
-            android:text="Začetnik"
-            android:textColor="#FFFFFF" />
-    </RadioGroup>
+            <RadioButton
+                android:id="@+id/expMountaineer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="#1A2E3F"
+                android:buttonTint="#FF9A7A"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="⛏️  Gornik\nVelo zahtevne poti, visokogorje, ferata"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+            <RadioButton
+                android:id="@+id/expAlpinist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#1A2E3F"
+                android:buttonTint="#FF9A7A"
+                android:paddingStart="16dp"
+                android:paddingTop="14dp"
+                android:paddingBottom="14dp"
+                android:text="🧗  Alpinist\nTehnično plezanje, zimsko visokogorje"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp" />
+
+        </RadioGroup>
+
+    </LinearLayout>
 
     <ProgressBar
         android:id="@+id/weatherProgress"

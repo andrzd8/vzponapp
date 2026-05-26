@@ -21,6 +21,7 @@ import org.xmlpull.v1.XmlPullParserFactory;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.List;
 
 public class MapActivity extends AppCompatActivity {
 

@@ -17,7 +17,6 @@ public class Trail {
             String difficulty,
             int gpxFile
     ) {
-
         this.title = title;
         this.description = description;
         this.distance = distance;

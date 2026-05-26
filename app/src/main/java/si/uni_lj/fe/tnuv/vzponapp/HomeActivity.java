@@ -108,13 +108,14 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void openTrailMap() {
-        Intent intent = new Intent(
-                HomeActivity.this,
-                MapActivity.class
-        );
-
+        Trail trail = trails[currentTrail];
+        Intent intent = new Intent(HomeActivity.this, TrailDetailsActivity.class);
+        intent.putExtra("trail_name", trail.title);
+        intent.putExtra("trail_distance", trail.distance);
+        intent.putExtra("trail_difficulty", trail.difficulty);
+        intent.putExtra("trail_gpx_file", trail.gpxFile);
+        intent.putExtra("trail_weather", trail.weather);
         intent.putExtra("trail_index", currentTrail);
-
         startActivity(intent);
     }
 

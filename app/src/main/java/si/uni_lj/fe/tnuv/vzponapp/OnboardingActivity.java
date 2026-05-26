@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -31,8 +32,8 @@ public class OnboardingActivity extends AppCompatActivity {
 
         EditText nameInput = findViewById(R.id.nameInput);
 
-        RadioGroup experienceGroup =
-                findViewById(R.id.experienceGroup);
+        LinearLayout experienceContainer = findViewById(R.id.experienceGroup);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
 
         ProgressBar weatherProgress =
                 findViewById(R.id.weatherProgress);
@@ -68,14 +69,14 @@ public class OnboardingActivity extends AppCompatActivity {
 
                 nameInput.setVisibility(View.GONE);
 
-                experienceGroup.setVisibility(View.VISIBLE);
+                experienceContainer.setVisibility(View.VISIBLE);
+                int checkedId = radioGroup.getCheckedRadioButtonId();
 
                 dotsText.setText("○  ●  ○");
 
             } else if (step == 2) {
 
-                int checkedId =
-                        experienceGroup.getCheckedRadioButtonId();
+                int checkedId = radioGroup.getCheckedRadioButtonId();
 
                 if (checkedId == -1) {
 
@@ -88,11 +89,9 @@ public class OnboardingActivity extends AppCompatActivity {
                     return;
                 }
 
-                RadioButton selectedButton =
-                        findViewById(checkedId);
-
-                experience =
-                        selectedButton.getText().toString();
+                if (checkedId == R.id.expHiker)            experience = "hiker";
+                else if (checkedId == R.id.expMountaineer) experience = "mountaineer";
+                else                                       experience = "alpinist";
 
                 step = 3;
 
@@ -102,8 +101,7 @@ public class OnboardingActivity extends AppCompatActivity {
                         "Nalagam napoved..."
                 );
 
-                experienceGroup.setVisibility(View.GONE);
-
+                experienceContainer.setVisibility(View.GONE);
                 weatherProgress.setVisibility(View.VISIBLE);
 
                 nextButton.setText("Začni");
