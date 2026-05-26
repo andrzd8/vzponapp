@@ -9,22 +9,28 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:layout_marginTop="18dp"
-            android:layout_marginStart="18dp"
-            android:backgroundTint="#FF9A7A"
-            android:text="←"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp" />
-        <ImageView
-            android:id="@+id/trailImage"
+        <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/bg_onboarding" />
+            android:layout_height="260dp">
+
+            <org.osmdroid.views.MapView
+                android:id="@+id/trailMapView"
+                android:layout_width="match_parent"
+                android:layout_height="260dp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:layout_margin="18dp"
+                android:backgroundTint="#FF9A7A"
+                android:text="←"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -111,7 +117,6 @@
 
             </LinearLayout>
 
-            <!-- NOVO: timestamp + osveži -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -165,6 +170,21 @@
                     android:padding="4dp" />
 
             </HorizontalScrollView>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Višinski profil"
+                android:textColor="#FFFFFF"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="34dp" />
+
+            <LinearLayout
+                android:id="@+id/elevationContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical" />
 
             <TextView
                 android:layout_width="wrap_content"

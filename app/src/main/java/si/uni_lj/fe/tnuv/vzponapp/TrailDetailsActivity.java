@@ -1,8 +1,13 @@
 package si.uni_lj.fe.tnuv.vzponapp;
 
 import android.app.AlertDialog;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.Typeface;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +20,12 @@ import android.content.SharedPreferences;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.GeoPoint;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Polyline;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -25,10 +36,19 @@ public class TrailDetailsActivity extends AppCompatActivity {
     double[] coords;
     double maxEle;
     String experience;
+    private MapView trailMapView;
+    private List<Double> elevationData;
+    private double eleMin, eleMax;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Configuration.getInstance().load(
+                getApplicationContext(),
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+        );
+
         setContentView(R.layout.activity_trail_details);
 
         Button backButton = findViewById(R.id.backButton);
@@ -46,13 +66,31 @@ public class TrailDetailsActivity extends AppCompatActivity {
         titleText.setText(trailName);
         distanceText.setText(trailDistance);
 
+        trailMapView = findViewById(R.id.trailMapView);
+        trailMapView.setTileSource(TileSourceFactory.MAPNIK);
+        trailMapView.setMultiTouchControls(false);
+
         SharedPreferences prefs = getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE);
         experience = prefs.getString("experience", "hiker");
 
         if (gpxFile != -1) {
-            coords = WeatherService.getDestinationFromGpx(this, gpxFile);
-            maxEle = coords[2];
+            GpxService.GpxData gpxData = GpxService.load(this, gpxFile);
+            maxEle = gpxData.maxEle;
+            coords = new double[]{gpxData.lat, gpxData.lon};
+            elevationData = gpxData.elevations;
+            eleMin = gpxData.minEle;
+            eleMax = gpxData.maxEle;
+
             loadWeather(false);
+            drawGpxTrack(gpxFile);
+
+            ElevationView elevView = new ElevationView(this);
+            elevView.setBackgroundColor(0xFF112840);
+            LinearLayout elevContainer = findViewById(R.id.elevationContainer);
+            LinearLayout.LayoutParams elevParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, 340);
+            elevParams.topMargin = 24;
+            elevContainer.addView(elevView, elevParams);
         }
 
         refreshButton.setOnClickListener(v -> loadWeather(true));
@@ -72,6 +110,36 @@ public class TrailDetailsActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (trailMapView != null) trailMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (trailMapView != null) trailMapView.onPause();
+    }
+
+    private void drawGpxTrack(int gpxResourceId) {
+        GpxService.GpxData data = GpxService.load(this, gpxResourceId);
+        if (data.points.isEmpty()) return;
+
+        Polyline line = new Polyline();
+        line.setPoints(data.points);
+        line.setColor(Color.rgb(255, 154, 122));
+        line.setWidth(8f);
+        trailMapView.getOverlays().add(line);
+
+        org.osmdroid.util.BoundingBox boundingBox =
+                org.osmdroid.util.BoundingBox.fromGeoPoints(data.points);
+        trailMapView.post(() -> {
+            trailMapView.zoomToBoundingBox(boundingBox, false, 60);
+            trailMapView.invalidate();
+        });
+    }
+
     private void loadWeather(boolean forceRefresh) {
         WeatherService.fetchWeather(this, coords[0], coords[1], forceRefresh,
                 new WeatherService.WeatherCallback() {
@@ -85,7 +153,6 @@ public class TrailDetailsActivity extends AppCompatActivity {
                             WeatherService.DailyForecast danes = forecast.get(0);
                             int todayColor;
                             if (!danes.hours.isEmpty()) {
-                                android.util.Log.d("COLOR", "maxEle=" + maxEle + " experience=" + experience);
                                 todayColor = 0xFF81C784;
                                 for (WeatherService.HourForecast h : danes.hours) {
                                     int hColor = WeatherService.getWeatherColor(
@@ -135,8 +202,6 @@ public class TrailDetailsActivity extends AppCompatActivity {
                 for (WeatherService.HourForecast h : d.hours) {
                     int hColor = WeatherService.getWeatherColor(
                             experience, maxEle, h.pop, h.windSpeed, h.weatherId);
-                    android.util.Log.d("COLOR", new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date(h.dt * 1000L))
-                            + " pop=" + h.pop + " wind=" + (int)(h.windSpeed * 3.6) + " id=" + h.weatherId + " color=" + (hColor == 0xFF81C784 ? "zelena" : hColor == 0xFFFFD580 ? "rumena" : "rdeča"));
                     if (hColor == 0xFFE57373) { color = hColor; break; }
                     if (hColor == 0xFFFFD580) { color = hColor; }
                 }
@@ -280,7 +345,6 @@ public class TrailDetailsActivity extends AppCompatActivity {
             }
         }
 
-
         ScrollView scrollView = new ScrollView(this);
         scrollView.addView(layout);
 
@@ -300,5 +364,48 @@ public class TrailDetailsActivity extends AppCompatActivity {
         if (id >= 300 && id < 500)   return "🌧️";
         if (id >= 200 && id < 300)   return "⛈️";
         return "🌡️";
+    }
+
+    private class ElevationView extends View {
+        public ElevationView(Context context) { super(context); }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            if (elevationData == null || elevationData.isEmpty()) return;
+            int w = getWidth(); int h = getHeight();
+            float padLeft = 60f, padBottom = 30f, padTop = 20f;
+            float graphW = w - padLeft, graphH = h - padBottom - padTop;
+            double eleRange = eleMax - eleMin; if (eleRange == 0) eleRange = 1;
+
+            Paint gp = new Paint();
+            gp.setColor(0x20FFFFFF);
+            Paint tp = new Paint(Paint.ANTI_ALIAS_FLAG);
+            tp.setColor(0xFFB8C5D1); tp.setTextSize(28f);
+
+            for (int i = 0; i <= 3; i++) {
+                float y = padTop + graphH - graphH * i / 3f;
+                canvas.drawLine(padLeft, y, w, y, gp);
+                canvas.drawText((int)(eleMin + eleRange * i / 3) + "m", 0, y + 10, tp);
+            }
+
+            Path fp = new Path(), lp = new Path();
+            fp.moveTo(padLeft, padTop + graphH);
+            for (int i = 0; i < elevationData.size(); i++) {
+                float x = padLeft + graphW * i / (elevationData.size() - 1);
+                float y = padTop + graphH - (float)((elevationData.get(i) - eleMin) / eleRange * graphH);
+                if (i == 0) { lp.moveTo(x, y); fp.lineTo(x, y); }
+                else { lp.lineTo(x, y); fp.lineTo(x, y); }
+            }
+            fp.lineTo(w, padTop + graphH); fp.close();
+
+            Paint fillP = new Paint(Paint.ANTI_ALIAS_FLAG);
+            fillP.setColor(0x336BB5FF); fillP.setStyle(Paint.Style.FILL);
+            canvas.drawPath(fp, fillP);
+
+            Paint lineP = new Paint(Paint.ANTI_ALIAS_FLAG);
+            lineP.setColor(0xFF6BB5FF); lineP.setStrokeWidth(3f);
+            lineP.setStyle(Paint.Style.STROKE);
+            canvas.drawPath(lp, lineP);
+        }
     }
 }

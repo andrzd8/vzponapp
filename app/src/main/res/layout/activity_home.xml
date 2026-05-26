@@ -16,17 +16,22 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/imagePlaceholder"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="270dp"
-        android:layout_marginTop="18dp"
-        android:background="#DDEEFF"
-        android:gravity="center"
-        android:text="SLIKA POTI"
-        android:textColor="#244F6B"
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="18dp">
+
+        <org.osmdroid.views.MapView
+            android:id="@+id/homeMapView"
+            android:layout_width="match_parent"
+            android:layout_height="270dp" />
+
+        <View
+            android:id="@+id/mapClickOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
     <TextView
         android:id="@+id/trailTitle"
@@ -43,7 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Zelo sončno, rahlo vetrovno, idealno za hojo v hribe; priporočena je lahka oprema, dobra obutev in dovolj vode..."
+        android:text="Zelo sončno, rahlo vetrovno..."
         android:textColor="#DDE7EE"
         android:textSize="15sp" />
 
@@ -87,6 +92,7 @@
             android:text="težko"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -156,6 +162,7 @@
             android:text="👤\nProfil"
             android:textColor="#FFFFFF"
             android:textSize="14sp" />
+
     </LinearLayout>
 
 </LinearLayout>

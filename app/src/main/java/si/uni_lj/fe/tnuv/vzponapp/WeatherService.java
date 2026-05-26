@@ -65,47 +65,6 @@ public class WeatherService {
         }
     }
 
-    public static double[] getDestinationFromGpx(Context context, int gpxResourceId) {
-        double lastLat = 0.0;
-        double lastLon = 0.0;
-        double maxEle = 0.0;
-
-        try {
-            InputStream inputStream = context.getResources().openRawResource(gpxResourceId);
-            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
-            XmlPullParser parser = factory.newPullParser();
-            parser.setInput(inputStream, null);
-
-            int eventType = parser.getEventType();
-            boolean inEle = false;
-
-            while (eventType != XmlPullParser.END_DOCUMENT) {
-                if (eventType == XmlPullParser.START_TAG) {
-                    if (parser.getName().equals("trkpt")) {
-                        lastLat = Double.parseDouble(parser.getAttributeValue(null, "lat"));
-                        lastLon = Double.parseDouble(parser.getAttributeValue(null, "lon"));
-                    } else if (parser.getName().equals("ele")) {
-                        inEle = true;
-                    }
-                } else if (eventType == XmlPullParser.TEXT && inEle) {
-                    double ele = Double.parseDouble(parser.getText().trim());
-                    if (ele > maxEle) maxEle = ele;
-                    inEle = false;
-                } else if (eventType == XmlPullParser.END_TAG) {
-                    inEle = false;
-                }
-                eventType = parser.next();
-            }
-
-            inputStream.close();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return new double[]{lastLat, lastLon, maxEle};
-    }
-
     public static void fetchWeather(Context context, double lat, double lon,
                                     boolean forceRefresh, WeatherCallback callback) {
         SharedPreferences cache = context.getSharedPreferences(PREFS_CACHE, Context.MODE_PRIVATE);

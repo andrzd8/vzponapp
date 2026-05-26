@@ -1,17 +1,24 @@
 package si.uni_lj.fe.tnuv.vzponapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
+import org.osmdroid.util.BoundingBox;
+import org.osmdroid.views.MapView;
+import org.osmdroid.views.overlay.Polyline;
+
 public class HomeActivity extends AppCompatActivity {
 
     int currentTrail = 0;
-
     Trail[] trails = TrailRepository.trails;
 
     TextView trailTitle;
@@ -19,20 +26,18 @@ public class HomeActivity extends AppCompatActivity {
     TextView distanceText;
     TextView weatherText;
     TextView difficultyText;
-    TextView imagePlaceholder;
     TextView cardCounter;
-
-    int[] imageColors = {
-            0xFFDDEEFF,
-            0xFFE5F5D5,
-            0xFFFFE0D2,
-            0xFFE8DDF5,
-            0xFFFFF4D6
-    };
+    MapView homeMapView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Configuration.getInstance().load(
+                getApplicationContext(),
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
+        );
+
         setContentView(R.layout.activity_home);
 
         trailTitle = findViewById(R.id.trailTitle);
@@ -40,51 +45,55 @@ public class HomeActivity extends AppCompatActivity {
         distanceText = findViewById(R.id.distanceText);
         weatherText = findViewById(R.id.weatherText);
         difficultyText = findViewById(R.id.difficultyText);
-        imagePlaceholder = findViewById(R.id.imagePlaceholder);
         cardCounter = findViewById(R.id.cardCounter);
+        homeMapView = findViewById(R.id.homeMapView);
+
+        homeMapView.setTileSource(TileSourceFactory.MAPNIK);
+        homeMapView.setMultiTouchControls(false);
 
         Button previousButton = findViewById(R.id.previousButton);
         Button nextTrailButton = findViewById(R.id.nextTrailButton);
-
         TextView navMap = findViewById(R.id.navMap);
         TextView navProfile = findViewById(R.id.navProfile);
 
         showTrail();
 
-        imagePlaceholder.setOnClickListener(v -> openTrailMap());
+        findViewById(R.id.mapClickOverlay).setOnClickListener(v -> openTrailDetails());
+        trailTitle.setOnClickListener(v -> openTrailDetails());
 
         previousButton.setOnClickListener(v -> {
             currentTrail--;
-
-            if (currentTrail < 0) {
-                currentTrail = trails.length - 1;
-            }
-
+            if (currentTrail < 0) currentTrail = trails.length - 1;
             showTrail();
         });
 
         nextTrailButton.setOnClickListener(v -> {
             currentTrail++;
-
-            if (currentTrail >= trails.length) {
-                currentTrail = 0;
-            }
-
+            if (currentTrail >= trails.length) currentTrail = 0;
             showTrail();
         });
 
         navProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeActivity.this, ProfileActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
         });
 
         navMap.setOnClickListener(v -> {
             Intent intent = new Intent(HomeActivity.this, MapActivity.class);
-
             intent.putExtra("trail_index", currentTrail);
-
             startActivity(intent);
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        homeMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        homeMapView.onPause();
     }
 
     private void showTrail() {
@@ -95,19 +104,28 @@ public class HomeActivity extends AppCompatActivity {
         distanceText.setText(trail.distance);
         weatherText.setText(trail.weather);
         difficultyText.setText(trail.difficulty);
+        cardCounter.setText((currentTrail + 1) + " / " + trails.length);
 
-        imagePlaceholder.setText(trail.title);
+        GpxService.GpxData data = GpxService.load(this, trail.gpxFile);
 
-        imagePlaceholder.setBackgroundColor(
-                imageColors[currentTrail % imageColors.length]
-        );
+        homeMapView.getOverlays().clear();
 
-        cardCounter.setText(
-                (currentTrail + 1) + " / " + trails.length
-        );
+        if (!data.points.isEmpty()) {
+            Polyline line = new Polyline();
+            line.setPoints(data.points);
+            line.setColor(Color.rgb(255, 154, 122));
+            line.setWidth(8f);
+            homeMapView.getOverlays().add(line);
+
+            BoundingBox boundingBox = BoundingBox.fromGeoPoints(data.points);
+            homeMapView.post(() -> {
+                homeMapView.zoomToBoundingBox(boundingBox, false, 60);
+                homeMapView.invalidate();
+            });
+        }
     }
 
-    private void openTrailMap() {
+    private void openTrailDetails() {
         Trail trail = trails[currentTrail];
         Intent intent = new Intent(HomeActivity.this, TrailDetailsActivity.class);
         intent.putExtra("trail_name", trail.title);
@@ -118,6 +136,4 @@ public class HomeActivity extends AppCompatActivity {
         intent.putExtra("trail_index", currentTrail);
         startActivity(intent);
     }
-
-
 }
