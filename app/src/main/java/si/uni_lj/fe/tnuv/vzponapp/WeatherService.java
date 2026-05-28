@@ -205,4 +205,22 @@ public class WeatherService {
         if (pop >= popYellow || windKmh >= windYellow) return 0xFFFFD580;
         return 0xFF81C784;
     }
+    
+    public static String getSafetyLabel(String experience, double maxEle,
+                                        DailyForecast day, boolean longRoute) {
+        int color = getWeatherColor(experience, maxEle, day.pop, day.windSpeed, day.weatherId);
+
+        String safety;
+        if (color == 0xFFE57373)      safety = "nevarno";
+        else if (color == 0xFFFFD580) safety = "previdno";
+        else                          safety = "varno";
+
+        // longRoute zviša tveganje za eno stopnjo
+        if (longRoute) {
+            if ("varno".equals(safety))    return "previdno";
+            if ("previdno".equals(safety)) return "nevarno";
+        }
+
+        return safety;
+    }
 }

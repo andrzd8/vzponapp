@@ -62,7 +62,6 @@ public class TrailDetailsActivity extends AppCompatActivity {
         String trailName = getIntent().getStringExtra("trail_name");
         String trailDistance = getIntent().getStringExtra("trail_distance");
         int gpxFile = getIntent().getIntExtra("trail_gpx_file", -1);
-
         titleText.setText(trailName);
         distanceText.setText(trailDistance);
 
@@ -166,15 +165,22 @@ public class TrailDetailsActivity extends AppCompatActivity {
                             }
 
                             TextView wText = findViewById(R.id.weatherText);
-                            if (todayColor == 0xFF81C784) {
-                                wText.setText("Varno");
-                                wText.setTextColor(0xFF81C784);
-                            } else if (todayColor == 0xFFFFD580) {
-                                wText.setText("Previdno");
-                                wText.setTextColor(0xFFFFD580);
-                            } else {
-                                wText.setText("Nevarno");
-                                wText.setTextColor(0xFFE57373);
+
+                            boolean longRoute = getIntent().getBooleanExtra("trail_long_route", false);
+                            String safetyLabel = WeatherService.getSafetyLabel(experience, maxEle, danes, longRoute);
+                            switch (safetyLabel) {
+                                case "varno":
+                                    wText.setText("Varno");
+                                    wText.setTextColor(0xFF81C784);
+                                    break;
+                                case "previdno":
+                                    wText.setText("Previdno");
+                                    wText.setTextColor(0xFFFFD580);
+                                    break;
+                                default:
+                                    wText.setText("Nevarno");
+                                    wText.setTextColor(0xFFE57373);
+                                    break;
                             }
                         }
 

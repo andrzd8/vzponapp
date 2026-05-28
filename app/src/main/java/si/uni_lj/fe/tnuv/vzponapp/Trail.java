@@ -5,23 +5,23 @@ public class Trail {
     String title;
     String description;
     String distance;
-    String weather;
     String difficulty;
     int gpxFile;
+    boolean longRoute;
 
     public Trail(
             String title,
             String description,
             String distance,
-            String weather,
             String difficulty,
-            int gpxFile
+            int gpxFile,
+            boolean longRoute
     ) {
         this.title = title;
         this.description = description;
         this.distance = distance;
-        this.weather = weather;
         this.difficulty = difficulty;
         this.gpxFile = gpxFile;
+        this.longRoute = longRoute;
     }
 }

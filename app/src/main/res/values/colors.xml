@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Primary palette -->
+    <color name="colorPrimary">#FF6B35</color>
+    <color name="colorSecondary">#4A90D9</color>
+    <color name="colorBackground">#1A1A2E</color>
+    <color name="colorSurface">#16213E</color>
+    <color name="colorSurfaceVariant">#0F3460</color>
+
+    <!-- Barve nevarnosti -->
+    <color name="colorDifficultyDanger">#FF4444</color>
+    <color name="colorDifficultyWarning">#FF8C00</color>
+    <color name="colorDifficultyEasy">#44BB77</color>
+
+    <!-- Text -->
+    <color name="colorOnSurface">#FFFFFF</color>
+    <color name="colorOnSurfaceMuted">#AAAACC</color>
 </resources>

@@ -38,8 +38,9 @@ dependencies {
     implementation(libs.constraintlayout)
     implementation(libs.volley)
     implementation(libs.okhttp)
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-    implementation("org.osmdroid:osmdroid-android:6.1.20") // dodala za map
+    implementation("org.osmdroid:osmdroid-android:6.1.20")
 }
