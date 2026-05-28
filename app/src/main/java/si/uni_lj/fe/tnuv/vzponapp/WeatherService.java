@@ -200,12 +200,37 @@ public class WeatherService {
                 break;
         }
 
-        if (weatherId >= 200 && weatherId < 300) return 0xFFE57373;
-        if (pop >= popRed || windKmh >= windRed)  return 0xFFE57373;
+        // Nevihte (200-299): rdeče za vse, ne glede na višino ali izkušnje
+        if (weatherId >= 200 && weatherId < 300) {
+            return 0xFFE57373;
+        }
+
+        // Rosenje (300-321): odvisno od izkušenj in višine
+        if (weatherId >= 300 && weatherId < 322) {
+            if (maxEle <= 1000) return 0xFF81C784;
+            if (maxEle <= 1500) {
+                return experience.equals("alpinist") ? 0xFF81C784 : 0xFFFFD580;
+            }
+            // nad 1500m
+            if (experience.equals("alpinist"))    return 0xFF81C784;
+            if (experience.equals("mountaineer")) return 0xFFFFD580;
+            return 0xFFE57373; // hiker
+        }
+
+        // Dež (500-531): odvisno od višine in izkušenj
+        if (weatherId >= 500 && weatherId < 532) {
+            if (maxEle <= 500) return 0xFF81C784;
+            if (maxEle <= 1000) {
+                return experience.equals("alpinist") ? 0xFF81C784 : 0xFFFFD580;
+            }
+            // nad 1000m — normalni pop/wind izračun spodaj
+        }
+
+        if (pop >= popRed || windKmh >= windRed)       return 0xFFE57373;
         if (pop >= popYellow || windKmh >= windYellow) return 0xFFFFD580;
         return 0xFF81C784;
     }
-    
+
     public static String getSafetyLabel(String experience, double maxEle,
                                         DailyForecast day, boolean longRoute) {
         int color = getWeatherColor(experience, maxEle, day.pop, day.windSpeed, day.weatherId);

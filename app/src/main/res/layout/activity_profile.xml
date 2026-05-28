@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="45dp"
         android:gravity="center"
-        android:text="Profil"
+        android:text="@string/profile_title"
         android:textColor="#FFFFFF"
         android:textSize="32sp"
         android:textStyle="bold" />
@@ -24,7 +24,7 @@
         android:layout_marginTop="30dp"
         android:background="#DDEEFF"
         android:gravity="center"
-        android:text="👤"
+        android:text="@string/profile_avatar"
         android:textSize="55sp" />
 
     <TextView
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
         android:gravity="center"
-        android:text="Ana Novak"
+        android:text="@string/profile_name_placeholder"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -46,7 +46,7 @@
         android:background="#252525"
         android:gravity="center_vertical"
         android:paddingStart="18dp"
-        android:text="Stopnja: Rekreativec"
+        android:text="@string/profile_experience_prefix"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 
@@ -58,7 +58,7 @@
         android:background="#252525"
         android:gravity="center_vertical"
         android:paddingStart="18dp"
-        android:text="Shranjena tura: /"
+        android:text="@string/profile_saved_prefix"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 
@@ -68,7 +68,7 @@
         android:layout_height="55dp"
         android:layout_marginTop="35dp"
         android:backgroundTint="#FF9A7A"
-        android:text="Nazaj"
+        android:text="@string/profile_back"
         android:textColor="#FFFFFF"
         android:textStyle="bold" />
 

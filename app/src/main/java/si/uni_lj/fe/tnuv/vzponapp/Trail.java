@@ -8,6 +8,7 @@ public class Trail {
     String difficulty;
     int gpxFile;
     boolean longRoute;
+    double maxEle;
 
     public Trail(
             String title,
@@ -23,5 +24,6 @@ public class Trail {
         this.difficulty = difficulty;
         this.gpxFile = gpxFile;
         this.longRoute = longRoute;
+        this.maxEle = 0;
     }
 }

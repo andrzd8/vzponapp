@@ -12,7 +12,7 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:text="Najboljša izbira za vikend"
+        android:text="@string/home_header"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold" />
@@ -48,7 +48,7 @@
                 android:id="@+id/navHomeIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🏠"
+                android:text="@string/nav_home"
                 android:textSize="22sp" />
 
             <View
@@ -73,7 +73,7 @@
                 android:id="@+id/navMapIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="🗺️"
+                android:text="@string/nav_map"
                 android:textSize="22sp"
                 android:alpha="0.4" />
 
@@ -99,7 +99,7 @@
                 android:id="@+id/navProfileIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="👤"
+                android:text="@string/nav_profile"
                 android:textSize="22sp"
                 android:alpha="0.4" />
 
@@ -123,7 +123,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="12dp"
         android:backgroundTint="@color/colorSecondary"
-        android:text="Priporočeno za danes"
+        android:text="@string/filter_all"
         android:textColor="#FFFFFF" />
 
 </LinearLayout>

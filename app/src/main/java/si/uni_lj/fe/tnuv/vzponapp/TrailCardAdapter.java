@@ -28,8 +28,6 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
     private final String experience;
     private final OnTrailClickListener listener;
 
-    private static final double DEFAULT_ELEVATION = 500;
-
     private static final int COLOR_DANGER_BG   = 0x26FF4444;
     private static final int COLOR_DANGER_TEXT  = 0xFFFF6B6B;
     private static final int COLOR_WARN_BG      = 0x26FF8C00;
@@ -68,6 +66,12 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
     public void onBindViewHolder(@NonNull TrailViewHolder holder, int position) {
         Trail trail = trails[position];
 
+        // Naloži maxEle iz GPX cache (brezplačno po prvem klicu)
+        if (trail.maxEle == 0 && trail.gpxFile != 0) {
+            GpxService.GpxData gpxData = GpxService.load(context, trail.gpxFile);
+            trail.maxEle = gpxData.maxEle;
+        }
+
         holder.title.setText(trail.title);
         holder.description.setText(trail.description);
         holder.distance.setText(trail.distance);
@@ -76,7 +80,7 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
 
         if (todayForecast != null) {
             String safety = WeatherService.getSafetyLabel(
-                    experience, DEFAULT_ELEVATION, todayForecast, trail.longRoute);
+                    experience, trail.maxEle, todayForecast, trail.longRoute);
             applyWeatherBadge(holder, safety);
         } else {
             holder.weather.setText("...");
@@ -115,14 +119,12 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
         switch (difficulty.toLowerCase()) {
             case "nevarno":
             case "težko":
-                // Težko in nevarno = rdeče
                 h.difficultyBadge.setBackgroundColor(COLOR_DANGER_BG);
                 h.difficultyIcon.setText("⚠ ");
                 h.difficultyIcon.setTextColor(COLOR_DANGER_TEXT);
                 h.difficulty.setTextColor(COLOR_DANGER_TEXT);
                 break;
             case "srednje":
-                // Srednje = oranžno
                 h.difficultyBadge.setBackgroundColor(COLOR_WARN_BG);
                 h.difficultyIcon.setText("~ ");
                 h.difficultyIcon.setTextColor(COLOR_WARN_TEXT);
@@ -130,7 +132,6 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
                 break;
             case "lahko":
             default:
-                // Lahko = zeleno
                 h.difficultyBadge.setBackgroundColor(COLOR_EASY_BG);
                 h.difficultyIcon.setText("✓ ");
                 h.difficultyIcon.setTextColor(COLOR_EASY_TEXT);
@@ -148,6 +149,7 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
                 h.weatherIcon.setTextColor(COLOR_DANGER_TEXT);
                 h.weather.setTextColor(COLOR_DANGER_TEXT);
                 break;
+            case "previdno":
             case "tvegano":
             case "srednje":
                 h.weatherBadge.setBackgroundColor(COLOR_WARN_BG);

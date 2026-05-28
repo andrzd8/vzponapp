@@ -26,7 +26,7 @@
                 android:layout_height="52dp"
                 android:layout_margin="18dp"
                 android:backgroundTint="#FF9A7A"
-                android:text="←"
+                android:text="@string/detail_back"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp" />
 
@@ -42,7 +42,7 @@
                 android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Voje - Uskovnica"
+                android:text="@string/card_title_placeholder"
                 android:textColor="#FFFFFF"
                 android:textSize="30sp"
                 android:textStyle="bold" />
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="Julijske Alpe"
+                android:text="@string/card_desc_placeholder"
                 android:textColor="#D7DEE5"
                 android:textSize="15sp" />
 
@@ -74,7 +74,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Dolžina"
+                        android:text="@string/detail_distance_label"
                         android:textColor="#B8C5D1"
                         android:textSize="13sp" />
 
@@ -82,7 +82,7 @@
                         android:id="@+id/distanceText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="23 km"
+                        android:text="@string/card_distance_placeholder"
                         android:textColor="#FFFFFF"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -100,7 +100,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Razmere"
+                        android:text="@string/detail_weather_label"
                         android:textColor="#B8C5D1"
                         android:textSize="13sp" />
 
@@ -108,7 +108,7 @@
                         android:id="@+id/weatherText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Varno"
+                        android:text="@string/safety_varno"
                         android:textColor="#FFB08F"
                         android:textSize="20sp"
                         android:textStyle="bold" />
@@ -138,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:backgroundTint="#1A3A52"
-                    android:text="🔄 Osveži"
+                    android:text="@string/detail_refresh"
                     android:textColor="#FFFFFF"
                     android:textSize="12sp" />
 
@@ -147,7 +147,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Vremenska napoved"
+                android:text="@string/detail_forecast_title"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -174,7 +174,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Višinski profil"
+                android:text="@string/detail_elevation_title"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -189,7 +189,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Priporočena oprema"
+                android:text="@string/detail_equipment_title"
                 android:textColor="#FFFFFF"
                 android:textSize="22sp"
                 android:textStyle="bold"
@@ -209,7 +209,7 @@
                     android:background="@drawable/bg_onboarding"
                     android:gravity="center_vertical"
                     android:paddingStart="18dp"
-                    android:text="🥾 Pohodni čevlji"
+                    android:text="@string/detail_equipment_1"
                     android:textColor="#FFFFFF" />
 
                 <TextView
@@ -220,7 +220,7 @@
                     android:background="@drawable/bg_onboarding"
                     android:gravity="center_vertical"
                     android:paddingStart="18dp"
-                    android:text="🧥 Vetrovka"
+                    android:text="@string/detail_equipment_2"
                     android:textColor="#FFFFFF" />
 
                 <TextView
@@ -230,7 +230,7 @@
                     android:background="@drawable/bg_onboarding"
                     android:gravity="center_vertical"
                     android:paddingStart="18dp"
-                    android:text="💧 2L vode"
+                    android:text="@string/detail_equipment_3"
                     android:textColor="#FFFFFF" />
 
             </LinearLayout>
@@ -242,7 +242,7 @@
                 android:layout_marginTop="40dp"
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="#FF9A7A"
-                android:text="Shrani turo"
+                android:text="@string/detail_save"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
@@ -252,7 +252,7 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
                 android:backgroundTint="#1A3A52"
-                android:text="🗺️ Odpri zemljevid"
+                android:text="@string/detail_open_map"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 

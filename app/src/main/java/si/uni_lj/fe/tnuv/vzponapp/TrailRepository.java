@@ -14,6 +14,15 @@ public class TrailRepository {
                 ),
 
                 new Trail(
+                        "Čez Ljubljanski grad",
+                        "Lahka pot",
+                        "1km",
+                        "lahko",
+                        R.raw.cez_lj_grad,
+                        false
+                ),
+
+                new Trail(
                         "Iz Matkovega kota na Mrzlo goro",
                         "Daljša gorska pot za izkušene.",
                         "43 km",
@@ -110,6 +119,15 @@ public class TrailRepository {
                         "srednje",
                         R.raw.radece_leskovec,
                         true
+                ),
+
+                new Trail(
+                        "Lipca - Kokoš",
+                        "Enostavna položna pot",
+                        "2 km",
+                        "lahko",
+                        R.raw.lipca_kokos,
+                        false
                 )
 
         };

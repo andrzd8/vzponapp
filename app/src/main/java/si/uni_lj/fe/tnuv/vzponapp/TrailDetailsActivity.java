@@ -36,6 +36,8 @@ public class TrailDetailsActivity extends AppCompatActivity {
     double[] coords;
     double maxEle;
     String experience;
+    String trailName;
+    boolean longRoute;
     private MapView trailMapView;
     private List<Double> elevationData;
     private double eleMin, eleMax;
@@ -59,9 +61,11 @@ public class TrailDetailsActivity extends AppCompatActivity {
         Button saveButton = findViewById(R.id.saveButton);
         Button refreshButton = findViewById(R.id.refreshButton);
 
-        String trailName = getIntent().getStringExtra("trail_name");
+        trailName = getIntent().getStringExtra("trail_name");
         String trailDistance = getIntent().getStringExtra("trail_distance");
         int gpxFile = getIntent().getIntExtra("trail_gpx_file", -1);
+        longRoute = getIntent().getBooleanExtra("trail_long_route", false);
+
         titleText.setText(trailName);
         distanceText.setText(trailDistance);
 
@@ -166,8 +170,14 @@ public class TrailDetailsActivity extends AppCompatActivity {
 
                             TextView wText = findViewById(R.id.weatherText);
 
-                            boolean longRoute = getIntent().getBooleanExtra("trail_long_route", false);
                             String safetyLabel = WeatherService.getSafetyLabel(experience, maxEle, danes, longRoute);
+
+                            // shrani za HomeActivity
+                            getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE)
+                                    .edit()
+                                    .putString("weather_" + trailName, safetyLabel)
+                                    .apply();
+
                             switch (safetyLabel) {
                                 case "varno":
                                     wText.setText("Varno");

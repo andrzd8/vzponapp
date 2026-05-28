@@ -1,3 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">VzponApp</string>
+
+    <!-- Navigacija -->
+    <string name="nav_home">🏠</string>
+    <string name="nav_map">🗺️</string>
+    <string name="nav_profile">👤</string>
+
+    <!-- Home -->
+    <string name="home_header">Najboljša izbira za vikend</string>
+    <string name="filter_all">Priporočeno za danes</string>
+    <string name="filter_safe">🟢 Samo varne poti</string>
+    <string name="no_trails">Ni varnih poti za danes, ostani doma.</string>
+    <string name="loading">…</string>
+
+    <!-- Onboarding -->
+    <string name="onboarding_title">Pozdravljeni!</string>
+    <string name="onboarding_subtitle">Kako ti je ime?</string>
+    <string name="onboarding_name_hint">Vnesi svoje ime</string>
+    <string name="onboarding_next">Naprej</string>
+    <string name="onboarding_dots_1">●  ○  ○</string>
+    <string name="onboarding_dots_2">○  ●  ○</string>
+    <string name="onboarding_dots_3">○  ○  ●</string>
+    <string name="exp_hiker">🥾  Pohodnik\nLahke in zahtevne markirane poti</string>
+    <string name="exp_mountaineer">⛏️  Gornik\nVelo zahtevne poti, visokogorje, ferata</string>
+    <string name="exp_alpinist">🧗  Alpinist\nTehnično plezanje, zimsko visokogorje</string>
+
+    <!-- Trail details -->
+    <string name="detail_back">←</string>
+    <string name="detail_distance_label">Dolžina</string>
+    <string name="detail_weather_label">Razmere</string>
+    <string name="detail_forecast_title">Vremenska napoved</string>
+    <string name="detail_elevation_title">Višinski profil</string>
+    <string name="detail_equipment_title">Priporočena oprema</string>
+    <string name="detail_equipment_1">🥾 Pohodni čevlji</string>
+    <string name="detail_equipment_2">🧥 Vetrovka</string>
+    <string name="detail_equipment_3">💧 2L vode</string>
+    <string name="detail_refresh">🔄 Osveži</string>
+    <string name="detail_save">Shrani turo</string>
+    <string name="detail_open_map">🗺️ Odpri zemljevid</string>
+
+    <!-- Map -->
+    <string name="map_title">Zemljevid poti</string>
+
+    <!-- Profile -->
+    <string name="profile_title">Profil</string>
+    <string name="profile_avatar">👤</string>
+    <string name="profile_name_placeholder">Ana Novak</string>
+    <string name="profile_experience_prefix">Stopnja: </string>
+    <string name="profile_saved_prefix">Shranjena tura: </string>
+    <string name="profile_back">Nazaj</string>
+
+    <!-- Card placeholders -->
+    <string name="card_title_placeholder">Ime ture</string>
+    <string name="card_desc_placeholder">Opis ture...</string>
+    <string name="card_distance_placeholder">– km</string>
+    <string name="card_weather_placeholder">...</string>
+    <string name="card_difficulty_placeholder">–</string>
+    <string name="card_distance_icon">↗ </string>
+    <string name="card_weather_icon_danger">⚠ </string>
+    <string name="card_difficulty_icon_easy">✓ </string>
+
+    <!-- Težavnost -->
+    <string name="difficulty_lahko">lahko</string>
+    <string name="difficulty_srednje">srednje</string>
+    <string name="difficulty_tezko">težko</string>
+    <string name="difficulty_nevarno">nevarno</string>
+
+    <!-- Varnost/vreme -->
+    <string name="safety_varno">varno</string>
+    <string name="safety_tvegano">tvegano</string>
+    <string name="safety_nevarno">nevarno</string>
 </resources>

@@ -13,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="center|bottom"
-        android:text="Pozdravljeni!"
+        android:text="@string/onboarding_title"
         android:textColor="#FFFFFF"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="18dp"
-        android:text="Kako ti je ime?"
+        android:text="@string/onboarding_subtitle"
         android:textColor="#FFFFFF"
         android:textSize="16sp" />
 
@@ -33,7 +33,7 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginTop="18dp"
-        android:hint="Vnesi svoje ime"
+        android:hint="@string/onboarding_name_hint"
         android:padding="14dp"
         android:textColor="#FFFFFF"
         android:textColorHint="#BDBDBD" />
@@ -62,7 +62,7 @@
                 android:paddingStart="16dp"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:text="🥾  Pohodnik\nLahke in zahtevne markirane poti"
+                android:text="@string/exp_hiker"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
@@ -76,7 +76,7 @@
                 android:paddingStart="16dp"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:text="⛏️  Gornik\nVelo zahtevne poti, visokogorje, ferata"
+                android:text="@string/exp_mountaineer"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
@@ -89,7 +89,7 @@
                 android:paddingStart="16dp"
                 android:paddingTop="14dp"
                 android:paddingBottom="14dp"
-                android:text="🧗  Alpinist\nTehnično plezanje, zimsko visokogorje"
+                android:text="@string/exp_alpinist"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp" />
 
@@ -112,14 +112,14 @@
         android:layout_height="54dp"
         android:layout_gravity="center"
         android:layout_marginTop="40dp"
-        android:text="Naprej" />
+        android:text="@string/onboarding_next" />
 
     <TextView
         android:id="@+id/dotsText"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center"
-        android:text="●  ○  ○"
+        android:text="@string/onboarding_dots_1"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 
