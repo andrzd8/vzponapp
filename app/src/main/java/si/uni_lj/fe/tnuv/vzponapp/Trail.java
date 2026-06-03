@@ -4,6 +4,7 @@ public class Trail {
 
     String title;
     String description;
+
     String distance;
     String difficulty;
     int gpxFile;
