@@ -197,7 +197,14 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        SharedPreferences prefs =
+                getSharedPreferences("vzpon_prefs", MODE_PRIVATE);
+
+        experience = prefs.getString("experience", "hiker");
+
         setActiveNav(0);
-        adapter.updateData(displayedTrails, todayForecast);
+
+        applyFilter();
     }
 }
