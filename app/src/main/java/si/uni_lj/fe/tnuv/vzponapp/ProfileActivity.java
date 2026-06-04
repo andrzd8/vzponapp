@@ -12,7 +12,6 @@ public class ProfileActivity extends AppCompatActivity {
 
     TextView nameText;
     TextView experienceText;
-    TextView savedTrailText;
     Button backButton;
 
     @Override
@@ -22,7 +21,6 @@ public class ProfileActivity extends AppCompatActivity {
 
         nameText = findViewById(R.id.nameText);
         experienceText = findViewById(R.id.experienceText);
-        savedTrailText = findViewById(R.id.savedTrailText);
         backButton = findViewById(R.id.backButton);
 
         SharedPreferences sharedPref =
@@ -30,18 +28,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         String ime = sharedPref.getString("name", "Uporabnik");
         String izkusnje = sharedPref.getString("experience", "Ni izbrano");
-        String shranjeneTure = sharedPref.getString("saved_trail", "");
+        String email = sharedPref.getString("email", "");
+        boolean googleSignedIn =
+                sharedPref.getBoolean("google_signed_in", false);
 
-        nameText.setText(ime);
-        experienceText.setText("Stopnja: " + izkusnje);
-        if (shranjeneTure.isEmpty()) {
-            savedTrailText.setText("Shranjene ture: /");
+        if (googleSignedIn && !email.isEmpty()) {
+            nameText.setText(ime + "\n" + email);
         } else {
-            savedTrailText.setText("Shranjene ture: " + shranjeneTure);
+            nameText.setText(ime);
         }
 
-        backButton.setOnClickListener(v -> {
-            finish();
-        });
+        experienceText.setText("Stopnja: " + izkusnje);
+
+        backButton.setOnClickListener(v -> finish());
     }
 }

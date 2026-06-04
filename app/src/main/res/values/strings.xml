@@ -18,6 +18,8 @@
     <string name="onboarding_title">Pozdravljeni!</string>
     <string name="onboarding_subtitle">Kako ti je ime?</string>
     <string name="onboarding_name_hint">Vnesi svoje ime</string>
+    <string name="google_web_client_id">35151961013-72hleddltu2g2b6vld0pr48f00qtplml.apps.googleusercontent.com</string>
+    <string name="sign_in_google">Nadaljuj z Google računom</string>
     <string name="onboarding_next">Naprej</string>
     <string name="onboarding_dots_1">●  ○  ○</string>
     <string name="onboarding_dots_2">○  ●  ○</string>

@@ -38,6 +38,13 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#BDBDBD" />
 
+    <Button
+        android:id="@+id/googleSignInButton"
+        android:layout_width="match_parent"
+        android:layout_height="54dp"
+        android:layout_marginTop="14dp"
+        android:text="@string/sign_in_google" />
+
     <LinearLayout
         android:id="@+id/experienceGroup"
         android:layout_width="match_parent"

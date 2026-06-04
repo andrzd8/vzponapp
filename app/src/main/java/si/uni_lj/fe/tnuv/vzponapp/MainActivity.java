@@ -16,8 +16,7 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences prefs =
                 getSharedPreferences("vzpon_prefs", MODE_PRIVATE);
 
-        boolean onboardingDone = false;
-        //prefs.getBoolean("onboarding_done", false);
+        boolean onboardingDone = prefs.getBoolean("onboarding_done", false);
 
         if (onboardingDone) {
 
