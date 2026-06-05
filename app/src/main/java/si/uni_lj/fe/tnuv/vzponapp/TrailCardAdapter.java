@@ -16,6 +16,8 @@ import org.osmdroid.util.BoundingBox;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Polyline;
 
+import java.util.List;
+
 public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.TrailViewHolder> {
 
     public interface OnTrailClickListener {
@@ -23,7 +25,7 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
     }
 
     private final Context context;
-    private Trail[] trails;
+    private List<Trail> trails;
     private WeatherService.DailyForecast todayForecast;
     private final String experience;
     private final OnTrailClickListener listener;
@@ -37,7 +39,7 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
     private static final int COLOR_NEUTRAL_BG   = 0xFF0D1F2D;
     private static final int COLOR_NEUTRAL_TEXT = 0xFF8FA8BD;
 
-    public TrailCardAdapter(Context context, Trail[] trails,
+    public TrailCardAdapter(Context context, List<Trail> trails,
                             WeatherService.DailyForecast todayForecast,
                             String experience,
                             OnTrailClickListener listener) {
@@ -48,7 +50,7 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
         this.listener = listener;
     }
 
-    public void updateData(Trail[] newTrails, WeatherService.DailyForecast forecast) {
+    public void updateData(List<Trail> newTrails, WeatherService.DailyForecast forecast) {
         this.trails = newTrails;
         this.todayForecast = forecast;
         notifyDataSetChanged();
@@ -64,17 +66,11 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
 
     @Override
     public void onBindViewHolder(@NonNull TrailViewHolder holder, int position) {
-        Trail trail = trails[position];
-
-        // Naloži maxEle iz GPX cache (brezplačno po prvem klicu)
-        if (trail.maxEle == 0 && trail.gpxFile != 0) {
-            GpxService.GpxData gpxData = GpxService.load(context, trail.gpxFile);
-            trail.maxEle = gpxData.maxEle;
-        }
+        Trail trail = trails.get(position);
 
         holder.title.setText(trail.title);
         holder.description.setText(trail.description);
-        holder.distance.setText(trail.distance);
+        holder.distance.setText(String.format("%.1f km", trail.distance));
 
         applyDifficultyBadge(holder, trail.difficulty);
 
@@ -94,7 +90,7 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
         holder.mapView.setMultiTouchControls(false);
         holder.mapView.getOverlays().clear();
 
-        GpxService.GpxData data = GpxService.load(context, trail.gpxFile);
+        GpxService.GpxData data = GpxService.load(context, trail.gpxPath);
         if (!data.points.isEmpty()) {
             Polyline line = new Polyline();
             line.setPoints(data.points);
@@ -174,7 +170,7 @@ public class TrailCardAdapter extends RecyclerView.Adapter<TrailCardAdapter.Trai
 
     @Override
     public int getItemCount() {
-        return trails != null ? trails.length : 0;
+        return trails != null ? trails.size() : 0;
     }
 
     static class TrailViewHolder extends RecyclerView.ViewHolder {

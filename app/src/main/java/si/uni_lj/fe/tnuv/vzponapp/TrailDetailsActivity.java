@@ -38,6 +38,7 @@ public class TrailDetailsActivity extends AppCompatActivity {
     String experience;
     String trailName;
     boolean longRoute;
+    String gpxPath;
     private MapView trailMapView;
     private List<Double> elevationData;
     private double eleMin, eleMax;
@@ -61,13 +62,15 @@ public class TrailDetailsActivity extends AppCompatActivity {
         Button saveButton = findViewById(R.id.saveButton);
         Button refreshButton = findViewById(R.id.refreshButton);
 
-        trailName = getIntent().getStringExtra("trail_name");
-        String trailDistance = getIntent().getStringExtra("trail_distance");
-        int gpxFile = getIntent().getIntExtra("trail_gpx_file", -1);
-        longRoute = getIntent().getBooleanExtra("trail_long_route", false);
+        int trailIndex = getIntent().getIntExtra("trail_index", 0);
+        Trail trail = TrailRepository.getTrails(this).get(trailIndex);
+
+        trailName = trail.title;
+        gpxPath = trail.gpxPath;
+        longRoute = trail.longRoute;
 
         titleText.setText(trailName);
-        distanceText.setText(trailDistance);
+        distanceText.setText(String.format("%.1f km", trail.distance));
 
         trailMapView = findViewById(R.id.trailMapView);
         trailMapView.setTileSource(TileSourceFactory.MAPNIK);
@@ -76,25 +79,23 @@ public class TrailDetailsActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE);
         experience = prefs.getString("experience", "hiker");
 
-        if (gpxFile != -1) {
-            GpxService.GpxData gpxData = GpxService.load(this, gpxFile);
-            maxEle = gpxData.maxEle;
-            coords = new double[]{gpxData.lat, gpxData.lon};
-            elevationData = gpxData.elevations;
-            eleMin = gpxData.minEle;
-            eleMax = gpxData.maxEle;
+        GpxService.GpxData gpxData = GpxService.load(this, gpxPath);
+        maxEle = gpxData.maxEle;
+        coords = new double[]{gpxData.lat, gpxData.lon};
+        elevationData = gpxData.elevations;
+        eleMin = gpxData.minEle;
+        eleMax = gpxData.maxEle;
 
-            loadWeather(false);
-            drawGpxTrack(gpxFile);
+        loadWeather(false);
+        drawGpxTrack(gpxPath);
 
-            ElevationView elevView = new ElevationView(this);
-            elevView.setBackgroundColor(0xFF112840);
-            LinearLayout elevContainer = findViewById(R.id.elevationContainer);
-            LinearLayout.LayoutParams elevParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, 340);
-            elevParams.topMargin = 24;
-            elevContainer.addView(elevView, elevParams);
-        }
+        ElevationView elevView = new ElevationView(this);
+        elevView.setBackgroundColor(0xFF112840);
+        LinearLayout elevContainer = findViewById(R.id.elevationContainer);
+        LinearLayout.LayoutParams elevParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT, 340);
+        elevParams.topMargin = 24;
+        elevContainer.addView(elevView, elevParams);
 
         refreshButton.setOnClickListener(v -> loadWeather(true));
 
@@ -125,8 +126,8 @@ public class TrailDetailsActivity extends AppCompatActivity {
         if (trailMapView != null) trailMapView.onPause();
     }
 
-    private void drawGpxTrack(int gpxResourceId) {
-        GpxService.GpxData data = GpxService.load(this, gpxResourceId);
+    private void drawGpxTrack(String path) {
+        GpxService.GpxData data = GpxService.load(this, path);
         if (data.points.isEmpty()) return;
 
         Polyline line = new Polyline();
@@ -169,10 +170,9 @@ public class TrailDetailsActivity extends AppCompatActivity {
                             }
 
                             TextView wText = findViewById(R.id.weatherText);
+                            String safetyLabel = WeatherService.getSafetyLabel(
+                                    experience, maxEle, danes, longRoute);
 
-                            String safetyLabel = WeatherService.getSafetyLabel(experience, maxEle, danes, longRoute);
-
-                            // shrani za HomeActivity
                             getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE)
                                     .edit()
                                     .putString("weather_" + trailName, safetyLabel)
@@ -195,8 +195,8 @@ public class TrailDetailsActivity extends AppCompatActivity {
                         }
 
                         TextView updatedText = findViewById(R.id.weatherUpdatedText);
-                        updatedText.setText("Osveženo: " + new SimpleDateFormat("HH:mm", Locale.getDefault())
-                                .format(new Date(cachedAt)));
+                        updatedText.setText("Osveženo: " + new SimpleDateFormat("HH:mm",
+                                Locale.getDefault()).format(new Date(cachedAt)));
                     }
 
                     @Override

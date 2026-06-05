@@ -2,209 +2,123 @@ package si.uni_lj.fe.tnuv.vzponapp;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.LinearSnapHelper;
 import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.SnapHelper;
 
-import org.osmdroid.config.Configuration;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    Trail[] allTrails = TrailRepository.trails;
-    Trail[] displayedTrails = allTrails;
-
-    boolean filterActive = false;
-    WeatherService.DailyForecast todayForecast = null;
-    String experience = "hiker";
-
-    RecyclerView trailRecyclerView;
+    RecyclerView recyclerView;
     TrailCardAdapter adapter;
-    Button filterButton;
-
-    // Nav views
-    LinearLayout navHome, navMap, navProfile;
-    TextView navHomeIcon, navMapIcon, navProfileIcon;
-    View navHomeDot, navMapDot, navProfileDot;
-
-    static final double LAT = 46.05;
-    static final double LON = 14.51;
-    static final double DEFAULT_ELEVATION = 500;
-
-    private static final int COLOR_ACTIVE = 0xFFFF6B35;
-    private static final int COLOR_INACTIVE = 0x66FFFFFF;
+    View emptyState;
+    WeatherService.DailyForecast currentForecast = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        Configuration.getInstance().load(
-                getApplicationContext(),
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext())
-        );
-
         setContentView(R.layout.activity_home);
 
-        SharedPreferences prefs = getSharedPreferences("vzpon_prefs", MODE_PRIVATE);
-        experience = prefs.getString("experience", "hiker");
+        recyclerView = findViewById(R.id.trailRecyclerView);
+        emptyState = findViewById(R.id.emptyState);
 
-        trailRecyclerView = findViewById(R.id.trailRecyclerView);
-        filterButton = findViewById(R.id.filterButton);
+        LinearLayoutManager lm = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        recyclerView.setLayoutManager(lm);
+        new LinearSnapHelper().attachToRecyclerView(recyclerView);
+        recyclerView.setClipToPadding(false);
 
-        navHome = findViewById(R.id.navHome);
-        navMap = findViewById(R.id.navMap);
-        navProfile = findViewById(R.id.navProfile);
-        navHomeIcon = findViewById(R.id.navHomeIcon);
-        navMapIcon = findViewById(R.id.navMapIcon);
-        navProfileIcon = findViewById(R.id.navProfileIcon);
-        navHomeDot = findViewById(R.id.navHomeDot);
-        navMapDot = findViewById(R.id.navMapDot);
-        navProfileDot = findViewById(R.id.navProfileDot);
+        LinearLayout navHome = findViewById(R.id.navHome);
+        LinearLayout navMap = findViewById(R.id.navMap);
+        LinearLayout navProfile = findViewById(R.id.navProfile);
+        Button addTrailButton = findViewById(R.id.addTrailButton);
 
-        // Home je vedno aktiven na tem screenu
-        setActiveNav(0);
-
-        LinearLayoutManager layoutManager = new LinearLayoutManager(
-                this, LinearLayoutManager.HORIZONTAL, false);
-        trailRecyclerView.setLayoutManager(layoutManager);
-
-        SnapHelper snapHelper = new LinearSnapHelper();
-        snapHelper.attachToRecyclerView(trailRecyclerView);
-
-        adapter = new TrailCardAdapter(this, displayedTrails, null, experience,
-                position -> openTrailDetails(position));
-        trailRecyclerView.setAdapter(adapter);
+        navHome.setOnClickListener(v -> recyclerView.smoothScrollToPosition(0));
 
         navMap.setOnClickListener(v -> {
-            setActiveNav(1);
-            int pos = getCurrentPosition();
-            Intent intent = new Intent(HomeActivity.this, MapActivity.class);
-            intent.putExtra("trail_index", findRealIndex(displayedTrails[pos]));
+            LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
+            int pos = llm != null ? llm.findFirstCompletelyVisibleItemPosition() : 0;
+            if (pos < 0) pos = 0;
+            Intent intent = new Intent(this, MapActivity.class);
+            intent.putExtra("trail_index", pos);
             startActivity(intent);
         });
 
-        navProfile.setOnClickListener(v -> {
-            setActiveNav(2);
-            startActivity(new Intent(HomeActivity.this, ProfileActivity.class));
-        });
+        navProfile.setOnClickListener(v ->
+                startActivity(new Intent(this, ProfileActivity.class)));
 
-        filterButton.setOnClickListener(v -> {
-            filterActive = !filterActive;
-            applyFilter();
-            filterButton.setText(filterActive ? "🟢 Samo varne poti" : "Priporočeno za danes");
-        });
-
-        WeatherService.fetchWeather(this, LAT, LON, false, new WeatherService.WeatherCallback() {
-            @Override
-            public void onSuccess(String description, double tempCelsius,
-                                  List<WeatherService.DailyForecast> forecast, long cachedAt) {
-                if (!forecast.isEmpty()) {
-                    todayForecast = forecast.get(0);
-                    adapter.updateData(displayedTrails, todayForecast);
-                }
-            }
-            @Override
-            public void onError(String errorMessage) { }
-        });
-    }
-
-    private void setActiveNav(int index) {
-        // Reset vseh
-        navHomeIcon.setAlpha(0.4f);
-        navMapIcon.setAlpha(0.4f);
-        navProfileIcon.setAlpha(0.4f);
-        navHomeDot.setBackgroundColor(Color.TRANSPARENT);
-        navMapDot.setBackgroundColor(Color.TRANSPARENT);
-        navProfileDot.setBackgroundColor(Color.TRANSPARENT);
-
-        // Aktiviraj izbranega
-        switch (index) {
-            case 0:
-                navHomeIcon.setAlpha(1f);
-                navHomeDot.setBackgroundColor(COLOR_ACTIVE);
-                break;
-            case 1:
-                navMapIcon.setAlpha(1f);
-                navMapDot.setBackgroundColor(COLOR_ACTIVE);
-                break;
-            case 2:
-                navProfileIcon.setAlpha(1f);
-                navProfileDot.setBackgroundColor(COLOR_ACTIVE);
-                break;
-        }
-    }
-
-    private void applyFilter() {
-        if (filterActive && todayForecast != null) {
-            List<Trail> safe = new ArrayList<>();
-            for (Trail t : allTrails) {
-                String safety = WeatherService.getSafetyLabel(
-                        experience, DEFAULT_ELEVATION, todayForecast, t.longRoute);
-                if (!"nevarno".equals(safety)) safe.add(t);
-            }
-            displayedTrails = safe.toArray(new Trail[0]);
-        } else {
-            displayedTrails = allTrails;
-        }
-        adapter.updateData(displayedTrails, todayForecast);
-        trailRecyclerView.scrollToPosition(0);
-    }
-
-    private void openTrailDetails(int adapterPosition) {
-        Trail trail = displayedTrails[adapterPosition];
-        String safety = todayForecast != null
-                ? WeatherService.getSafetyLabel(experience, DEFAULT_ELEVATION,
-                todayForecast, trail.longRoute)
-                : "-";
-
-        Intent intent = new Intent(HomeActivity.this, TrailDetailsActivity.class);
-        intent.putExtra("trail_name", trail.title);
-        intent.putExtra("trail_distance", trail.distance);
-        intent.putExtra("trail_difficulty", trail.difficulty);
-        intent.putExtra("trail_gpx_file", trail.gpxFile);
-        intent.putExtra("trail_long_route", trail.longRoute);
-        intent.putExtra("trail_weather", safety);
-        intent.putExtra("trail_index", findRealIndex(trail));
-        startActivity(intent);
-    }
-
-    private int getCurrentPosition() {
-        LinearLayoutManager lm = (LinearLayoutManager) trailRecyclerView.getLayoutManager();
-        if (lm == null) return 0;
-        int pos = lm.findFirstVisibleItemPosition();
-        return Math.max(0, Math.min(pos, displayedTrails.length - 1));
-    }
-
-    private int findRealIndex(Trail target) {
-        for (int i = 0; i < allTrails.length; i++) {
-            if (allTrails[i] == target) return i;
-        }
-        return 0;
+        addTrailButton.setOnClickListener(v ->
+                startActivity(new Intent(this, AddTrailActivity.class)));
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        refreshTrails();
+    }
 
-        SharedPreferences prefs =
-                getSharedPreferences("vzpon_prefs", MODE_PRIVATE);
+    private void refreshTrails() {
+        List<Trail> trails = TrailRepository.getTrails(this);
 
-        experience = prefs.getString("experience", "hiker");
+        if (trails.isEmpty()) {
+            emptyState.setVisibility(View.VISIBLE);
+            recyclerView.setVisibility(View.GONE);
+            return;
+        }
 
-        setActiveNav(0);
+        emptyState.setVisibility(View.GONE);
+        recyclerView.setVisibility(View.VISIBLE);
 
-        applyFilter();
+        SharedPreferences prefs = getSharedPreferences("vzpon_prefs", MODE_PRIVATE);
+        String experience = prefs.getString("experience", "Pohodnik");
+
+        if (adapter == null) {
+            adapter = new TrailCardAdapter(this, trails, currentForecast, experience, pos -> {
+                Intent intent = new Intent(this, TrailDetailsActivity.class);
+                intent.putExtra("trail_index", pos);
+                startActivity(intent);
+            });
+            recyclerView.setAdapter(adapter);
+        } else {
+            adapter.updateData(trails, currentForecast);
+        }
+
+        loadWeather(trails);
+    }
+
+    private void loadWeather(List<Trail> trails) {
+        double lat = 46.0569;
+        double lon = 14.5058;
+
+        if (!trails.isEmpty()) {
+            GpxService.GpxData data = GpxService.load(this, trails.get(0).gpxPath);
+            if (data.center != null && data.center.getLatitude() != 0) {
+                lat = data.center.getLatitude();
+                lon = data.center.getLongitude();
+            }
+        }
+
+        WeatherService.fetchWeather(this, lat, lon, false, new WeatherService.WeatherCallback() {
+            @Override
+            public void onSuccess(String description, double tempCelsius,
+                                  List<WeatherService.DailyForecast> forecast, long cachedAt) {
+                if (forecast.isEmpty()) return;
+                currentForecast = forecast.get(0);
+                if (adapter != null) {
+                    adapter.updateData(TrailRepository.getTrails(HomeActivity.this), currentForecast);
+                }
+            }
+
+            @Override
+            public void onError(String errorMessage) {
+                // adapter ostane z "..." za vreme
+            }
+        });
     }
 }

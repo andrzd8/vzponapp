@@ -19,6 +19,7 @@ import org.osmdroid.views.overlay.Polyline;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserFactory;
 
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,33 +40,29 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
 
         mapView = findViewById(R.id.mapView);
-
         mapView.setTileSource(TileSourceFactory.MAPNIK);
         mapView.setMultiTouchControls(true);
 
-        GeoPoint sloveniaCenter = new GeoPoint(46.1512, 14.9955);
-
         mapView.getController().setZoom(8.0);
-        mapView.getController().setCenter(sloveniaCenter);
+        mapView.getController().setCenter(new GeoPoint(46.1512, 14.9955));
 
         int trailIndex = getIntent().getIntExtra("trail_index", 0);
+        List<Trail> trails = TrailRepository.getTrails(this);
 
-        Trail selectedTrail = TrailRepository.trails[trailIndex];
-
-        drawGpxTrack(selectedTrail.gpxFile);
+        if (trailIndex < trails.size()) {
+            drawGpxTrack(trails.get(trailIndex).gpxPath);
+        }
 
         TextView navHome = findViewById(R.id.navHome);
         TextView navProfile = findViewById(R.id.navProfile);
 
         navHome.setOnClickListener(v -> {
-            Intent intent = new Intent(MapActivity.this, HomeActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MapActivity.this, HomeActivity.class));
             finish();
         });
 
         navProfile.setOnClickListener(v -> {
-            Intent intent = new Intent(MapActivity.this, ProfileActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(MapActivity.this, ProfileActivity.class));
             finish();
         });
     }
@@ -82,44 +79,26 @@ public class MapActivity extends AppCompatActivity {
         mapView.onPause();
     }
 
-    private void drawGpxTrack(int gpxResourceId) {
-
+    private void drawGpxTrack(String gpxPath) {
         ArrayList<GeoPoint> points = new ArrayList<>();
 
         try {
-            InputStream inputStream =
-                    getResources().openRawResource(gpxResourceId);
+            InputStream inputStream = new FileInputStream(gpxPath);
 
-            XmlPullParserFactory factory =
-                    XmlPullParserFactory.newInstance();
-
-            XmlPullParser parser =
-                    factory.newPullParser();
-
+            XmlPullParserFactory factory = XmlPullParserFactory.newInstance();
+            XmlPullParser parser = factory.newPullParser();
             parser.setInput(inputStream, null);
 
             int eventType = parser.getEventType();
-
             while (eventType != XmlPullParser.END_DOCUMENT) {
 
-                if (eventType == XmlPullParser.START_TAG) {
-
-                    if (parser.getName().equals("trkpt")) {
-
-                        double lat =
-                                Double.parseDouble(
-                                        parser.getAttributeValue(null, "lat")
-                                );
-
-                        double lon =
-                                Double.parseDouble(
-                                        parser.getAttributeValue(null, "lon")
-                                );
-
-                        points.add(
-                                new GeoPoint(lat, lon)
-                        );
-                    }
+                if (eventType == XmlPullParser.START_TAG
+                        && parser.getName().equals("trkpt")) {
+                    double lat = Double.parseDouble(
+                            parser.getAttributeValue(null, "lat"));
+                    double lon = Double.parseDouble(
+                            parser.getAttributeValue(null, "lon"));
+                    points.add(new GeoPoint(lat, lon));
                 }
 
                 eventType = parser.next();
@@ -128,18 +107,14 @@ public class MapActivity extends AppCompatActivity {
             inputStream.close();
 
             if (!points.isEmpty()) {
-
                 Polyline line = new Polyline();
-
                 line.setPoints(points);
                 line.setColor(Color.rgb(255, 154, 122));
                 line.setWidth(8f);
 
                 mapView.getOverlays().add(line);
-
                 mapView.getController().setZoom(14.0);
                 mapView.getController().setCenter(points.get(0));
-
                 mapView.invalidate();
             }
 

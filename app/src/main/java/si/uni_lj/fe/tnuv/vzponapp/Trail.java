@@ -4,27 +4,30 @@ public class Trail {
 
     String title;
     String description;
-
-    String distance;
+    String gpxPath;
     String difficulty;
-    int gpxFile;
+    float maxEle;
+    float minEle;
+    float distance;
     boolean longRoute;
-    double maxEle;
 
     public Trail(
             String title,
             String description,
-            String distance,
+            String gpxPath,
             String difficulty,
-            int gpxFile,
+            float maxEle,
+            float minEle,
+            float distance,
             boolean longRoute
     ) {
         this.title = title;
         this.description = description;
-        this.distance = distance;
+        this.gpxPath = gpxPath;
         this.difficulty = difficulty;
-        this.gpxFile = gpxFile;
+        this.maxEle = maxEle;
+        this.minEle = minEle;
+        this.distance = distance;
         this.longRoute = longRoute;
-        this.maxEle = 0;
     }
 }

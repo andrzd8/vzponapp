@@ -1,134 +1,95 @@
 package si.uni_lj.fe.tnuv.vzponapp;
 
+import android.content.Context;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TrailRepository {
 
-        public static Trail[] trails = {
+        private static final String TRAILS_FILE = "trails.json";
+        private static List<Trail> trails = null;
 
-                new Trail(
-                        "Kokrska koča - Jezerska Kočna",
-                        "Visokogorska zahtevnejša tura.",
-                        "2 km",
-                        "težko",
-                        R.raw.kokrska_koca_jezerska_kocna,
-                        false
-                ),
+        public static List<Trail> getTrails(Context context) {
+                if (trails == null) {
+                        trails = load(context);
+                }
+                return trails;
+        }
 
-                new Trail(
-                        "Čez Ljubljanski grad",
-                        "Lahka pot",
-                        "1km",
-                        "lahko",
-                        R.raw.cez_lj_grad,
-                        false
-                ),
+        public static void addTrail(Context context, Trail trail) {
+                getTrails(context).add(trail);
+                save(context);
+        }
 
-                new Trail(
-                        "Iz Matkovega kota na Mrzlo goro",
-                        "Daljša gorska pot za izkušene.",
-                        "43 km",
-                        "težko",
-                        R.raw.iz_matkovega_kota_na_mrzlo_goro,
-                        true
-                ),
+        public static void removeTrail(Context context, int index) {
+                getTrails(context).remove(index);
+                save(context);
+        }
 
-                new Trail(
-                        "Planina Korošica - Hajnževo sedlo - Košutica",
-                        "Razgledna planinska tura.",
-                        "9 km",
-                        "srednje",
-                        R.raw.planina_korosica_hajnzevo_sedlo_kosutica,
-                        false
-                ),
+        private static List<Trail> load(Context context) {
+                List<Trail> list = new ArrayList<>();
+                File file = new File(context.getFilesDir(), TRAILS_FILE);
+                if (!file.exists()) return list;
 
-                new Trail(
-                        "Češka koča - Mlinarsko sedlo - Cojzova koča",
-                        "Daljša visokogorska pot.",
-                        "51 km",
-                        "težko",
-                        R.raw.ceska_koca_mlinarsko_sedlo_cojzova_koca,
-                        true
-                ),
+                try {
+                        BufferedReader reader = new BufferedReader(new FileReader(file));
+                        StringBuilder sb = new StringBuilder();
+                        String line;
+                        while ((line = reader.readLine()) != null) sb.append(line);
+                        reader.close();
 
-                new Trail(
-                        "Cerknica - Slivnica",
-                        "Krajša pohodna pot.",
-                        "15 km",
-                        "lahko",
-                        R.raw.cernica_slivnica,
-                        false
-                ),
+                        JSONArray arr = new JSONArray(sb.toString());
+                        for (int i = 0; i < arr.length(); i++) {
+                                JSONObject obj = arr.getJSONObject(i);
+                                list.add(new Trail(
+                                        obj.getString("title"),
+                                        obj.getString("description"),
+                                        obj.getString("gpxPath"),
+                                        obj.getString("difficulty"),
+                                        (float) obj.getDouble("maxEle"),
+                                        (float) obj.getDouble("minEle"),
+                                        (float) obj.getDouble("distance"),
+                                        obj.getBoolean("longRoute")
+                                ));
+                        }
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+                return list;
+        }
 
-                new Trail(
-                        "Pustov mlin - Tisje",
-                        "Lahka rekreativna pot.",
-                        "5 km",
-                        "lahko",
-                        R.raw.pustov_mlin_tisje,
-                        false
-                ),
+        private static void save(Context context) {
+                try {
+                        JSONArray arr = new JSONArray();
+                        for (Trail t : trails) {
+                                JSONObject obj = new JSONObject();
+                                obj.put("title", t.title);
+                                obj.put("description", t.description);
+                                obj.put("gpxPath", t.gpxPath);
+                                obj.put("difficulty", t.difficulty);
+                                obj.put("maxEle", t.maxEle);
+                                obj.put("minEle", t.minEle);
+                                obj.put("distance", t.distance);
+                                obj.put("longRoute", t.longRoute);
+                                arr.put(obj);
+                        }
 
-                new Trail(
-                        "Križišče pri Volčah - Vremščica",
-                        "Zmerno zahtevna pohodna pot.",
-                        "6 km",
-                        "srednje",
-                        R.raw.krizisce_pri_volcah_vremscica,
-                        false
-                ),
+                        FileWriter writer = new FileWriter(
+                                new File(context.getFilesDir(), TRAILS_FILE)
+                        );
+                        writer.write(arr.toString());
+                        writer.close();
 
-                new Trail(
-                        "Ravne - Kočevska planinska pot",
-                        "Lažja gozdna tura.",
-                        "2 km",
-                        "lahko",
-                        R.raw.ravne_kocevska_pot,
-                        false
-                ),
-
-                new Trail(
-                        "Celjska koča - Tolsti vrh",
-                        "Razgledna rekreativna pot.",
-                        "6 km",
-                        "srednje",
-                        R.raw.celiska_koca_tolsti_vrh,
-                        false
-                ),
-
-                new Trail(
-                        "Pevno - Planica",
-                        "Srednje zahtevna pohodna pot.",
-                        "10 km",
-                        "srednje",
-                        R.raw.pevno_planica,
-                        false
-                ),
-
-                new Trail(
-                        "Bračevec - Tisje",
-                        "Krajša lokalna tura.",
-                        "3 km",
-                        "lahko",
-                        R.raw.bratcevec_tisje,
-                        false
-                ),
-
-                new Trail(
-                        "Radeče - Leskovec",
-                        "Daljša pohodna pot.",
-                        "25 km",
-                        "srednje",
-                        R.raw.radece_leskovec,
-                        true
-                ),
-
-                new Trail(
-                        "Lipca - Kokoš",
-                        "Enostavna položna pot",
-                        "2 km",
-                        "lahko",
-                        R.raw.lipca_kokos,
-                        false
-                )
-
-        };
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+        }
 }

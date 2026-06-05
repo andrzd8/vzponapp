@@ -5,17 +5,65 @@
     android:background="@drawable/bg_onboarding"
     android:orientation="vertical">
 
-    <TextView
+    <!-- Header z gumbom za dodajanje -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="48dp"
         android:layout_marginEnd="24dp"
         android:layout_marginBottom="16dp"
-        android:text="@string/home_header"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
-        android:textStyle="bold" />
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/home_header"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/addTrailButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#FF6B35"
+            android:text="+ Dodaj"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp" />
+
+    </LinearLayout>
+
+    <!-- Empty state — viden ko ni poti -->
+    <LinearLayout
+        android:id="@+id/emptyState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ni dodanih poti"
+            android:textColor="#AAAAAA"
+            android:textSize="18sp"
+            android:layout_marginBottom="12dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pritisni '+ Dodaj' za svojo prvo pot"
+            android:textColor="#666666"
+            android:textSize="14sp" />
+
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/trailRecyclerView"
@@ -27,7 +75,7 @@
         android:paddingEnd="24dp"
         android:overScrollMode="never" />
 
-    <!-- Bottom nav — samo ikone + dot indikator -->
+    <!-- Bottom nav -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
@@ -35,7 +83,6 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <!-- Poti (aktivno) -->
         <LinearLayout
             android:id="@+id/navHome"
             android:layout_width="0dp"
@@ -60,7 +107,6 @@
 
         </LinearLayout>
 
-        <!-- Zemljevid (neaktivno) -->
         <LinearLayout
             android:id="@+id/navMap"
             android:layout_width="0dp"
@@ -86,7 +132,6 @@
 
         </LinearLayout>
 
-        <!-- Profil (neaktivno) -->
         <LinearLayout
             android:id="@+id/navProfile"
             android:layout_width="0dp"
@@ -113,17 +158,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <Button
-        android:id="@+id/filterButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="12dp"
-        android:backgroundTint="@color/colorSecondary"
-        android:text="@string/filter_all"
-        android:textColor="#FFFFFF" />
 
 </LinearLayout>
