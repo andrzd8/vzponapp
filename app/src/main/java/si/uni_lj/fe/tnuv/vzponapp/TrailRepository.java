@@ -1,93 +1,70 @@
 package si.uni_lj.fe.tnuv.vzponapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
 public class TrailRepository {
 
-        private static final String TRAILS_FILE = "trails.json";
-        private static List<Trail> trails = null;
+        private static final String PREFS_NAME = "vzpon_prefs";
+        private static final String KEY_TRAILS = "trails_json";
+
+        public static Trail[] trails = new Trail[0];
+
+        public static void load(Context context) {
+                try {
+                        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                        String json = prefs.getString(KEY_TRAILS, "[]");
+                        JSONArray array = new JSONArray(json);
+                        List<Trail> list = new ArrayList<>();
+                        for (int i = 0; i < array.length(); i++) {
+                                JSONObject o = array.getJSONObject(i);
+                                list.add(new Trail(
+                                        o.getString("title"),
+                                        o.getString("description"),
+                                        o.getString("gpxPath"),
+                                        o.getString("difficulty"),
+                                        (float) o.getDouble("maxEle"),
+                                        (float) o.getDouble("minEle"),
+                                        (float) o.getDouble("distance"),
+                                        o.getBoolean("longRoute")
+                                ));
+                        }
+                        trails = list.toArray(new Trail[0]);
+                } catch (Exception e) {
+                        trails = new Trail[0];
+                }
+        }
 
         public static List<Trail> getTrails(Context context) {
-                if (trails == null) {
-                        trails = load(context);
-                }
-                return trails;
+                load(context);
+                return new ArrayList<>(java.util.Arrays.asList(trails));
         }
 
         public static void addTrail(Context context, Trail trail) {
-                getTrails(context).add(trail);
-                save(context);
-        }
-
-        public static void removeTrail(Context context, int index) {
-                getTrails(context).remove(index);
-                save(context);
-        }
-
-        private static List<Trail> load(Context context) {
-                List<Trail> list = new ArrayList<>();
-                File file = new File(context.getFilesDir(), TRAILS_FILE);
-                if (!file.exists()) return list;
-
                 try {
-                        BufferedReader reader = new BufferedReader(new FileReader(file));
-                        StringBuilder sb = new StringBuilder();
-                        String line;
-                        while ((line = reader.readLine()) != null) sb.append(line);
-                        reader.close();
+                        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                        String json = prefs.getString(KEY_TRAILS, "[]");
+                        JSONArray array = new JSONArray(json);
 
-                        JSONArray arr = new JSONArray(sb.toString());
-                        for (int i = 0; i < arr.length(); i++) {
-                                JSONObject obj = arr.getJSONObject(i);
-                                list.add(new Trail(
-                                        obj.getString("title"),
-                                        obj.getString("description"),
-                                        obj.getString("gpxPath"),
-                                        obj.getString("difficulty"),
-                                        (float) obj.getDouble("maxEle"),
-                                        (float) obj.getDouble("minEle"),
-                                        (float) obj.getDouble("distance"),
-                                        obj.getBoolean("longRoute")
-                                ));
-                        }
-                } catch (Exception e) {
-                        e.printStackTrace();
-                }
-                return list;
-        }
+                        JSONObject o = new JSONObject();
+                        o.put("title", trail.title);
+                        o.put("description", trail.description);
+                        o.put("gpxPath", trail.gpxPath);
+                        o.put("difficulty", trail.difficulty);
+                        o.put("maxEle", trail.maxEle);
+                        o.put("minEle", trail.minEle);
+                        o.put("distance", trail.distance);
+                        o.put("longRoute", trail.longRoute);
+                        array.put(o);
 
-        private static void save(Context context) {
-                try {
-                        JSONArray arr = new JSONArray();
-                        for (Trail t : trails) {
-                                JSONObject obj = new JSONObject();
-                                obj.put("title", t.title);
-                                obj.put("description", t.description);
-                                obj.put("gpxPath", t.gpxPath);
-                                obj.put("difficulty", t.difficulty);
-                                obj.put("maxEle", t.maxEle);
-                                obj.put("minEle", t.minEle);
-                                obj.put("distance", t.distance);
-                                obj.put("longRoute", t.longRoute);
-                                arr.put(obj);
-                        }
-
-                        FileWriter writer = new FileWriter(
-                                new File(context.getFilesDir(), TRAILS_FILE)
-                        );
-                        writer.write(arr.toString());
-                        writer.close();
-
+                        prefs.edit().putString(KEY_TRAILS, array.toString()).apply();
+                        load(context);
                 } catch (Exception e) {
                         e.printStackTrace();
                 }
