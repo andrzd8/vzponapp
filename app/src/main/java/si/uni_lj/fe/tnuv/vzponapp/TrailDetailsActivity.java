@@ -1,6 +1,7 @@
 package si.uni_lj.fe.tnuv.vzponapp;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -54,19 +55,20 @@ public class TrailDetailsActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_trail_details);
 
-        Button backButton = findViewById(R.id.backButton);
-        backButton.setOnClickListener(v -> finish());
-
-        TextView titleText = findViewById(R.id.titleText);
-        TextView distanceText = findViewById(R.id.distanceText);
-        Button saveButton = findViewById(R.id.saveButton);
+        Button backButton    = findViewById(R.id.backButton);
+        TextView titleText   = findViewById(R.id.titleText);
+        TextView distanceText= findViewById(R.id.distanceText);
+        Button saveButton    = findViewById(R.id.saveButton);
         Button refreshButton = findViewById(R.id.refreshButton);
+        Button aiButton      = findViewById(R.id.ullaButton);
+
+        backButton.setOnClickListener(v -> finish());
 
         int trailIndex = getIntent().getIntExtra("trail_index", 0);
         Trail trail = TrailRepository.getTrails(this).get(trailIndex);
 
         trailName = trail.title;
-        gpxPath = trail.gpxPath;
+        gpxPath   = trail.gpxPath;
         longRoute = trail.longRoute;
 
         titleText.setText(trailName);
@@ -80,11 +82,11 @@ public class TrailDetailsActivity extends AppCompatActivity {
         experience = prefs.getString("experience", "hiker");
 
         GpxService.GpxData gpxData = GpxService.load(this, gpxPath);
-        maxEle = gpxData.maxEle;
-        coords = new double[]{gpxData.lat, gpxData.lon};
+        maxEle        = gpxData.maxEle;
+        coords        = new double[]{gpxData.lat, gpxData.lon};
         elevationData = gpxData.elevations;
-        eleMin = gpxData.minEle;
-        eleMax = gpxData.maxEle;
+        eleMin        = gpxData.minEle;
+        eleMax        = gpxData.maxEle;
 
         loadWeather(false);
         drawGpxTrack(gpxPath);
@@ -98,6 +100,23 @@ public class TrailDetailsActivity extends AppCompatActivity {
         elevContainer.addView(elevView, elevParams);
 
         refreshButton.setOnClickListener(v -> loadWeather(true));
+
+        aiButton.setOnClickListener(v -> {
+            SharedPreferences sp = getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE);
+            String safetyLabel = sp.getString("weather_" + trailName, "varno");
+
+            Intent intent = new Intent(this, GeminiActivity.class);
+            intent.putExtra("trail_name",   trailName);
+            intent.putExtra("lat",          coords[0]);
+            intent.putExtra("lon",          coords[1]);
+            intent.putExtra("max_ele",      maxEle);
+            intent.putExtra("min_ele",      eleMin);
+            intent.putExtra("distance",     trail.distance);
+            intent.putExtra("experience",   experience);
+            intent.putExtra("long_route",   longRoute);
+            intent.putExtra("safety_label", safetyLabel);
+            startActivity(intent);
+        });
 
         saveButton.setOnClickListener(v -> {
             SharedPreferences sharedPref = getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE);
@@ -136,10 +155,10 @@ public class TrailDetailsActivity extends AppCompatActivity {
         line.setWidth(8f);
         trailMapView.getOverlays().add(line);
 
-        org.osmdroid.util.BoundingBox boundingBox =
+        org.osmdroid.util.BoundingBox bb =
                 org.osmdroid.util.BoundingBox.fromGeoPoints(data.points);
         trailMapView.post(() -> {
-            trailMapView.zoomToBoundingBox(boundingBox, false, 60);
+            trailMapView.zoomToBoundingBox(bb, false, 60);
             trailMapView.invalidate();
         });
     }
@@ -155,19 +174,6 @@ public class TrailDetailsActivity extends AppCompatActivity {
 
                         if (!forecast.isEmpty()) {
                             WeatherService.DailyForecast danes = forecast.get(0);
-                            int todayColor;
-                            if (!danes.hours.isEmpty()) {
-                                todayColor = 0xFF81C784;
-                                for (WeatherService.HourForecast h : danes.hours) {
-                                    int hColor = WeatherService.getWeatherColor(
-                                            experience, maxEle, h.pop, h.windSpeed, h.weatherId);
-                                    if (hColor == 0xFFE57373) { todayColor = hColor; break; }
-                                    if (hColor == 0xFFFFD580) { todayColor = hColor; }
-                                }
-                            } else {
-                                todayColor = WeatherService.getWeatherColor(
-                                        experience, maxEle, danes.pop, danes.windSpeed, danes.weatherId);
-                            }
 
                             TextView wText = findViewById(R.id.weatherText);
                             String safetyLabel = WeatherService.getSafetyLabel(
@@ -318,9 +324,9 @@ public class TrailDetailsActivity extends AppCompatActivity {
                 row.setPadding(0, 10, 0, 10);
 
                 View dot = new View(this);
-                LinearLayout.LayoutParams dotParams = new LinearLayout.LayoutParams(16, 16);
-                dotParams.setMarginEnd(16);
-                dot.setLayoutParams(dotParams);
+                LinearLayout.LayoutParams dotP = new LinearLayout.LayoutParams(16, 16);
+                dotP.setMarginEnd(16);
+                dot.setLayoutParams(dotP);
                 dot.setBackgroundColor(hColor);
 
                 TextView hourText = new TextView(this);

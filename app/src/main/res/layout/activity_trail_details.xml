@@ -56,6 +56,7 @@
                 android:textColor="#D7DEE5"
                 android:textSize="15sp" />
 
+            <!-- Razdalja + Vreme -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -117,6 +118,7 @@
 
             </LinearLayout>
 
+            <!-- Osveženo + Refresh -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -144,6 +146,7 @@
 
             </LinearLayout>
 
+            <!-- Napoved -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -171,6 +174,7 @@
 
             </HorizontalScrollView>
 
+            <!-- Višinski profil -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -186,6 +190,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
+            <!-- Oprema -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -198,49 +203,54 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:orientation="vertical">
+                android:layout_marginTop="12dp"
+                android:background="#112840"
+                android:padding="20dp"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-                <TextView
-                    android:id="@+id/equipment1"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_onboarding"
-                    android:gravity="center_vertical"
-                    android:paddingStart="18dp"
-                    android:text="@string/detail_equipment_1"
-                    android:textColor="#FFFFFF" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/equipment2"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:layout_marginBottom="12dp"
-                    android:background="@drawable/bg_onboarding"
-                    android:gravity="center_vertical"
-                    android:paddingStart="18dp"
-                    android:text="@string/detail_equipment_2"
-                    android:textColor="#FFFFFF" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🎒 Seznam opreme glede na vreme"
+                        android:textColor="#FFFFFF"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/equipment3"
-                    android:layout_width="match_parent"
-                    android:layout_height="52dp"
-                    android:background="@drawable/bg_onboarding"
-                    android:gravity="center_vertical"
-                    android:paddingStart="18dp"
-                    android:text="@string/detail_equipment_3"
-                    android:textColor="#FFFFFF" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
+                        android:text="AI asistent pripravi seznam in omogoča pogovor"
+                        android:textColor="#888888"
+                        android:textSize="12sp" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/ullaButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="12dp"
+                    android:backgroundTint="#FF9A7A"
+                    android:text="🤖 Odpri"
+                    android:textColor="#FFFFFF"
+                    android:textSize="13sp" />
 
             </LinearLayout>
 
+            <!-- Shrani + Karta -->
             <Button
                 android:id="@+id/saveButton"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="40dp"
-                android:layout_marginBottom="30dp"
                 android:backgroundTint="#FF9A7A"
                 android:text="@string/detail_save"
                 android:textColor="#FFFFFF"
@@ -251,6 +261,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginBottom="30dp"
                 android:backgroundTint="#1A3A52"
                 android:text="@string/detail_open_map"
                 android:textColor="#FFFFFF"
