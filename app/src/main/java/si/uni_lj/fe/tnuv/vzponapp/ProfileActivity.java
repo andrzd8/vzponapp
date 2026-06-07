@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -21,17 +20,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     ImageView profileImage;
     EditText nameInput;
-    TextView emailText;
     Spinner experienceSpinner;
-    Button backButton, saveButton, logoutButton, changeImageButton;
+    Button backButton, saveButton, changeImageButton;
 
     SharedPreferences sharedPref;
-
-    String[] experienceLabels = {
-            "Pohodnik",
-            "Gornik",
-            "Alpinist"
-    };
 
     String[] experienceValues = {
             "hiker",
@@ -48,14 +40,18 @@ public class ProfileActivity extends AppCompatActivity {
 
         profileImage = findViewById(R.id.profileImage);
         nameInput = findViewById(R.id.nameInput);
-        emailText = findViewById(R.id.emailText);
         experienceSpinner = findViewById(R.id.experienceSpinner);
         backButton = findViewById(R.id.backButton);
         saveButton = findViewById(R.id.saveButton);
-        logoutButton = findViewById(R.id.logoutButton);
         changeImageButton = findViewById(R.id.changeImageButton);
 
         sharedPref = getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE);
+
+        String[] experienceLabels = {
+                getString(R.string.experience_hiker_label),
+                getString(R.string.experience_mountaineer_label),
+                getString(R.string.experience_alpinist_label)
+        };
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(
                 this,
@@ -73,8 +69,6 @@ public class ProfileActivity extends AppCompatActivity {
         changeImageButton.setOnClickListener(v -> openImagePicker());
 
         saveButton.setOnClickListener(v -> saveProfileData());
-
-        logoutButton.setOnClickListener(v -> logout());
     }
 
     private void setupImagePicker() {
@@ -101,7 +95,7 @@ public class ProfileActivity extends AppCompatActivity {
                             profileImage.setImageURI(imageUri);
                         }
                     } else {
-                        Toast.makeText(this, "Izbira slike preklicana", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.image_selection_cancelled), Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -118,18 +112,11 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadProfileData() {
-        String name = sharedPref.getString("name", "Uporabnik");
-        String email = sharedPref.getString("email", "");
+        String name = sharedPref.getString("name", getString(R.string.profile_default_user));
         String experience = sharedPref.getString("experience", "hiker");
         String imageUriString = sharedPref.getString("profile_image_uri", "");
 
         nameInput.setText(name);
-
-        if (!email.isEmpty()) {
-            emailText.setText(email);
-        } else {
-            emailText.setText("Prijavljena brez Google računa");
-        }
 
         int selectedIndex = 0;
         for (int i = 0; i < experienceValues.length; i++) {
@@ -149,7 +136,7 @@ public class ProfileActivity extends AppCompatActivity {
         String newName = nameInput.getText().toString().trim();
 
         if (newName.isEmpty()) {
-            Toast.makeText(this, "Ime ne sme biti prazno", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.profile_name_empty), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -161,17 +148,6 @@ public class ProfileActivity extends AppCompatActivity {
                 .putString("experience", newExperience)
                 .apply();
 
-        Toast.makeText(this, "Profil shranjen", Toast.LENGTH_SHORT).show();
-    }
-
-    private void logout() {
-        sharedPref.edit()
-                .clear()
-                .apply();
-
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+        Toast.makeText(this, getString(R.string.profile_saved), Toast.LENGTH_SHORT).show();
     }
 }

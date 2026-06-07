@@ -38,13 +38,6 @@
         android:textColor="#FFFFFF"
         android:textColorHint="#BDBDBD" />
 
-    <Button
-        android:id="@+id/googleSignInButton"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:layout_marginTop="14dp"
-        android:text="@string/sign_in_google" />
-
     <LinearLayout
         android:id="@+id/experienceGroup"
         android:layout_width="match_parent"
@@ -104,15 +97,6 @@
 
     </LinearLayout>
 
-    <ProgressBar
-        android:id="@+id/weatherProgress"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="10dp"
-        android:layout_marginTop="24dp"
-        android:indeterminate="true"
-        android:visibility="gone" />
-
     <Button
         android:id="@+id/nextButton"
         android:layout_width="140dp"
@@ -126,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:gravity="center"
-        android:text="@string/onboarding_dots_1"
+        android:text="● ○ ○"
         android:textColor="#FFFFFF"
         android:textSize="24sp" />
 

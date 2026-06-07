@@ -71,14 +71,6 @@
             android:hint="Vnesi ime" />
 
         <TextView
-            android:id="@+id/emailText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:textColor="#BDBDBD"
-            android:textSize="14sp" />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
@@ -104,15 +96,6 @@
             android:text="Shrani spremembe"
             android:textColor="#FFFFFF"
             android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/logoutButton"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="14dp"
-            android:backgroundTint="#333333"
-            android:text="Odjava"
-            android:textColor="#FFFFFF" />
 
     </LinearLayout>
 </ScrollView>

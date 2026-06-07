@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="#FF6B35"
-            android:text="+ Dodaj"
+            android:text="@string/home_add_trail"
             android:textColor="#FFFFFF"
             android:textSize="13sp"
             android:paddingStart="14dp"
@@ -51,15 +51,15 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Ni dodanih poti"
+            android:layout_marginBottom="12dp"
+            android:text="@string/home_empty_title"
             android:textColor="#AAAAAA"
-            android:textSize="18sp"
-            android:layout_marginBottom="12dp" />
+            android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Pritisni '+ Dodaj' za svojo prvo pot"
+            android:text="@string/home_empty_subtitle"
             android:textColor="#666666"
             android:textSize="14sp" />
 
@@ -71,9 +71,9 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
+        android:overScrollMode="never"
         android:paddingStart="24dp"
-        android:paddingEnd="24dp"
-        android:overScrollMode="never" />
+        android:paddingEnd="24dp" />
 
     <!-- Bottom nav -->
     <LinearLayout
@@ -119,9 +119,9 @@
                 android:id="@+id/navMapIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:alpha="0.4"
                 android:text="@string/nav_map"
-                android:textSize="22sp"
-                android:alpha="0.4" />
+                android:textSize="22sp" />
 
             <View
                 android:id="@+id/navMapDot"
@@ -144,9 +144,9 @@
                 android:id="@+id/navProfileIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:alpha="0.4"
                 android:text="@string/nav_profile"
-                android:textSize="22sp"
-                android:alpha="0.4" />
+                android:textSize="22sp" />
 
             <View
                 android:id="@+id/navProfileDot"
