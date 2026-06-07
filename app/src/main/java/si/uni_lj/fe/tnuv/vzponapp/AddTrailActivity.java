@@ -26,6 +26,7 @@ public class AddTrailActivity extends AppCompatActivity {
 
     EditText nameInput;
     EditText descriptionInput;
+    Button backButton;
     Button pickGpxButton;
     Button saveButton;
     TextView gpxStatusText;
@@ -48,10 +49,13 @@ public class AddTrailActivity extends AppCompatActivity {
 
         nameInput = findViewById(R.id.nameInput);
         descriptionInput = findViewById(R.id.descriptionInput);
+        backButton = findViewById(R.id.backButton);
         pickGpxButton = findViewById(R.id.pickGpxButton);
         saveButton = findViewById(R.id.saveButton);
         gpxStatusText = findViewById(R.id.gpxStatusText);
         statsPreview = findViewById(R.id.statsPreview);
+
+        backButton.setOnClickListener(v -> finish());
 
         filePickerLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
