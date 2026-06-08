@@ -18,7 +18,7 @@ import android.util.Log;
 
 public class WeatherService {
 
-    private static final String API_KEY = "ae3ad8d545df32cf775025c10a643eb1";
+    private static final String API_KEY = BuildConfig.WEATHER_API_KEY;
     private static final String BASE_URL = "https://api.openweathermap.org/data/3.0/onecall";
     private static final long CACHE_DURATION_MS = 3 * 60 * 60 * 1000L;
     private static final String PREFS_CACHE = "weather_cache";

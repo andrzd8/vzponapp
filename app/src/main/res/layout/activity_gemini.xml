@@ -136,6 +136,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+<<<<<<< HEAD
             android:backgroundTint="@color/dialog_button_secondary"
             android:hint="@string/gemini_chat_hint"
             android:inputType="textMultiLine"
@@ -143,6 +144,15 @@
             android:padding="12dp"
             android:textColor="@color/text_primary"
             android:textColorHint="@color/text_hint" />
+=======
+            android:hint="Vprašaj AI asistenta..."
+
+            android:textColor="#FFFFFF"
+            android:backgroundTint="#1A3A52"
+            android:padding="12dp"
+            android:inputType="textCapSentences|textMultiLine"
+            android:maxLines="3" />
+>>>>>>> 450937568ee7d2233da859a45f1aff204d576b9f
 
         <Button
             android:id="@+id/sendButton"
