@@ -6,26 +6,6 @@
     android:background="@drawable/bg_onboarding"
     android:orientation="vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:gravity="center"
-        android:text="@string/map_title"
-        android:textColor="@color/text_primary"
-        android:textSize="30sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/weatherText"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:gravity="center"
-        android:text=""
-        android:textColor="@color/text_primary"
-        android:textSize="18sp" />
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"

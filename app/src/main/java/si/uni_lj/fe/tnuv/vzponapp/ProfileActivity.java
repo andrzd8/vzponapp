@@ -26,7 +26,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageView profileImage;
     private EditText nameInput;
     private Spinner experienceSpinner;
-    private Button backButton, saveButton, changeImageButton;
+    private Button saveButton, changeImageButton;
 
     private SharedPreferences sharedPref;
 
@@ -58,7 +58,6 @@ public class ProfileActivity extends AppCompatActivity {
         profileImage = findViewById(R.id.profileImage);
         nameInput = findViewById(R.id.nameInput);
         experienceSpinner = findViewById(R.id.experienceSpinner);
-        backButton = findViewById(R.id.backButton);
         saveButton = findViewById(R.id.saveButton);
         changeImageButton = findViewById(R.id.changeImageButton);
     }
@@ -81,7 +80,6 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        backButton.setOnClickListener(v -> finish());
         changeImageButton.setOnClickListener(v -> openImagePicker());
         saveButton.setOnClickListener(v -> saveProfileData());
     }
