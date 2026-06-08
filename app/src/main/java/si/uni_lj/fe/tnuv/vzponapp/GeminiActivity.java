@@ -133,8 +133,30 @@ public class GeminiActivity extends AppCompatActivity {
                 addEquipmentItem("⚠️ " + text);
                 return;
             }
-            prefs.edit().putString(cacheKey, text).apply();
+            String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+            prefs.edit().putString(cacheKey, text).putString(cacheKey + "_time", time).apply();
+            showCacheIndicator();
             parseAndShowList(text);
+        }));
+    }
+
+    private void refreshEquipmentList() {
+        prefs.edit().remove(cacheKey).apply();
+        history.clear();
+        equipmentContainer.removeAllViews();
+        loadingBar.setVisibility(View.VISIBLE);
+        callGemini(buildEquipmentPrompt(), true, text -> runOnUiThread(() -> {
+            loadingBar.setVisibility(View.GONE);
+            if (text.startsWith("Napaka")) {
+                addEquipmentItem("⚠️ " + text);
+                return;
+            }
+            String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+            prefs.edit().putString(cacheKey, text).putString(cacheKey + "_time", time).apply();
+            showCacheIndicator();
+            parseAndShowList(text);
+            addToHistory("user", buildEquipmentPrompt());
+            addToHistory("model", text);
         }));
     }
 
@@ -153,12 +175,39 @@ public class GeminiActivity extends AppCompatActivity {
     }
 
     private void showCacheIndicator() {
+        LinearLayout row = new LinearLayout(this);
+        row.setOrientation(LinearLayout.HORIZONTAL);
+        row.setGravity(Gravity.CENTER_VERTICAL);
+        LinearLayout.LayoutParams rp = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        rp.bottomMargin = 8;
+        row.setLayoutParams(rp);
+
         TextView cached = new TextView(this);
-        cached.setText("✓ Iz predpomnilnika (danes)");
+        String savedTime = prefs.getString(cacheKey + "_time", null);
+        String label = savedTime != null
+                ? "✓ Iz predpomnilnika (" + savedTime + ")"
+                : "✓ Iz predpomnilnika";
+        cached.setText(label);
         cached.setTextColor(0xFF6BB5FF);
         cached.setTextSize(11f);
-        cached.setPadding(4, 0, 0, 8);
-        equipmentContainer.addView(cached);
+        cached.setPadding(4, 0, 0, 0);
+        LinearLayout.LayoutParams tp = new LinearLayout.LayoutParams(
+                0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
+        cached.setLayoutParams(tp);
+
+        Button refreshBtn = new Button(this);
+        refreshBtn.setText("↺ Osveži");
+        refreshBtn.setTextColor(0xFF6BB5FF);
+        refreshBtn.setTextSize(11f);
+        refreshBtn.setBackground(null);
+        refreshBtn.setPadding(8, 0, 4, 0);
+        refreshBtn.setOnClickListener(v -> refreshEquipmentList());
+
+        row.addView(cached);
+        row.addView(refreshBtn);
+        equipmentContainer.addView(row);
     }
 
     private void setFormattedText(TextView tv, String text) {
