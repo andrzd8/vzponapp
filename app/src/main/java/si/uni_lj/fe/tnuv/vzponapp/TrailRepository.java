@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,10 +21,13 @@ public class TrailRepository {
                 try {
                         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
                         String json = prefs.getString(KEY_TRAILS, "[]");
+
                         JSONArray array = new JSONArray(json);
                         List<Trail> list = new ArrayList<>();
+
                         for (int i = 0; i < array.length(); i++) {
                                 JSONObject o = array.getJSONObject(i);
+
                                 list.add(new Trail(
                                         o.getString("title"),
                                         o.getString("description"),
@@ -35,7 +39,9 @@ public class TrailRepository {
                                         o.getBoolean("longRoute")
                                 ));
                         }
+
                         trails = list.toArray(new Trail[0]);
+
                 } catch (Exception e) {
                         trails = new Trail[0];
                 }
@@ -50,6 +56,7 @@ public class TrailRepository {
                 try {
                         SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
                         String json = prefs.getString(KEY_TRAILS, "[]");
+
                         JSONArray array = new JSONArray(json);
 
                         JSONObject o = new JSONObject();
@@ -61,10 +68,53 @@ public class TrailRepository {
                         o.put("minEle", trail.minEle);
                         o.put("distance", trail.distance);
                         o.put("longRoute", trail.longRoute);
+
                         array.put(o);
 
-                        prefs.edit().putString(KEY_TRAILS, array.toString()).apply();
+                        prefs.edit()
+                                .putString(KEY_TRAILS, array.toString())
+                                .apply();
+
                         load(context);
+
+                } catch (Exception e) {
+                        e.printStackTrace();
+                }
+        }
+
+        public static void deleteTrail(Context context, Trail trail) {
+                try {
+                        SharedPreferences prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+                        String json = prefs.getString(KEY_TRAILS, "[]");
+
+                        JSONArray oldArray = new JSONArray(json);
+                        JSONArray newArray = new JSONArray();
+
+                        for (int i = 0; i < oldArray.length(); i++) {
+                                JSONObject o = oldArray.getJSONObject(i);
+
+                                String title = o.getString("title");
+                                String gpxPath = o.getString("gpxPath");
+
+                                if (!(title.equals(trail.title)
+                                        && gpxPath.equals(trail.gpxPath))) {
+
+                                        newArray.put(o);
+                                }
+                        }
+
+                        prefs.edit()
+                                .putString(KEY_TRAILS, newArray.toString())
+                                .apply();
+
+                        File file = new File(trail.gpxPath);
+
+                        if (file.exists()) {
+                                file.delete();
+                        }
+
+                        load(context);
+
                 } catch (Exception e) {
                         e.printStackTrace();
                 }

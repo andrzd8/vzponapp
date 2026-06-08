@@ -245,16 +245,7 @@
 
             </LinearLayout>
 
-            <!-- Shrani + Karta -->
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="#FF9A7A"
-                android:text="@string/detail_save"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
+            <!-- izbrisi + Karta -->
 
             <Button
                 android:id="@+id/mapButton"
@@ -264,6 +255,17 @@
                 android:layout_marginBottom="30dp"
                 android:backgroundTint="#1A3A52"
                 android:text="@string/detail_open_map"
+                android:textColor="#FFFFFF"
+                android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="30dp"
+                android:backgroundTint="#8B1E1E"
+                android:text="Izbriši pot"
                 android:textColor="#FFFFFF"
                 android:textStyle="bold" />
 
