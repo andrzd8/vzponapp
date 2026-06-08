@@ -245,16 +245,7 @@
 
             </LinearLayout>
 
-            <!-- Shrani + Karta -->
-            <Button
-                android:id="@+id/saveButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="40dp"
-                android:backgroundTint="#FF9A7A"
-                android:text="@string/detail_save"
-                android:textColor="#FFFFFF"
-                android:textStyle="bold" />
+            <!-- izbrisi + Karta -->
 
             <Button
                 android:id="@+id/mapButton"

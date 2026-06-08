@@ -59,7 +59,6 @@ public class TrailDetailsActivity extends AppCompatActivity {
         Button backButton    = findViewById(R.id.backButton);
         TextView titleText   = findViewById(R.id.titleText);
         TextView distanceText= findViewById(R.id.distanceText);
-        Button saveButton    = findViewById(R.id.saveButton);
         Button refreshButton = findViewById(R.id.refreshButton);
         Button aiButton      = findViewById(R.id.ullaButton);
         Button deleteButton = findViewById(R.id.deleteButton);
@@ -124,20 +123,6 @@ public class TrailDetailsActivity extends AppCompatActivity {
             intent.putExtra("long_route",   longRoute);
             intent.putExtra("safety_label", safetyLabel);
             startActivity(intent);
-        });
-
-        saveButton.setOnClickListener(v -> {
-            SharedPreferences sharedPref = getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE);
-            String oldSavedTrails = sharedPref.getString("saved_trails", "");
-            if (!oldSavedTrails.contains(trailName)) {
-                String newSavedTrails = oldSavedTrails.isEmpty()
-                        ? trailName
-                        : oldSavedTrails + "; " + trailName;
-                sharedPref.edit().putString("saved_trails", newSavedTrails).apply();
-                Toast.makeText(this, "Tura shranjena!", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(this, "Ta tura je že shranjena.", Toast.LENGTH_SHORT).show();
-            }
         });
 
         deleteButton.setOnClickListener(v -> {
