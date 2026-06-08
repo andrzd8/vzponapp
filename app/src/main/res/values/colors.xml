@@ -6,6 +6,7 @@
     <color name="colorBackground">#1A1A2E</color>
     <color name="colorSurface">#16213E</color>
     <color name="colorSurfaceVariant">#0F3460</color>
+    <color name="white">#FFFFFF</color>
 
     <!-- Barve nevarnosti -->
     <color name="colorDifficultyDanger">#FF4444</color>

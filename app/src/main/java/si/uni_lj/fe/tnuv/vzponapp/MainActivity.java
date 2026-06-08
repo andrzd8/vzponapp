@@ -3,6 +3,8 @@ package si.uni_lj.fe.tnuv.vzponapp;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,26 +15,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences prefs =
-                getSharedPreferences("vzpon_prefs", MODE_PRIVATE);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
 
-        boolean onboardingDone = prefs.getBoolean("onboarding_done", false);
+            SharedPreferences prefs =
+                    getSharedPreferences("vzpon_prefs", MODE_PRIVATE);
 
-        if (onboardingDone) {
+            boolean onboardingDone = prefs.getBoolean("onboarding_done", false);
 
-            Intent intent =
-                    new Intent(this, HomeActivity.class);
+            if (onboardingDone) {
 
-            startActivity(intent);
+                Intent intent =
+                        new Intent(this, HomeActivity.class);
 
-        } else {
+                startActivity(intent);
 
-            Intent intent =
-                    new Intent(this, OnboardingActivity.class);
+            } else {
 
-            startActivity(intent);
-        }
+                Intent intent =
+                        new Intent(this, OnboardingActivity.class);
 
-        finish();
+                startActivity(intent);
+            }
+
+            finish();
+
+        }, 2000);
     }
 }
