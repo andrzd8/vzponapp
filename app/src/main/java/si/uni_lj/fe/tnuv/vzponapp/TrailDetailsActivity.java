@@ -80,6 +80,8 @@ public class TrailDetailsActivity extends AppCompatActivity {
 
         titleText.setText(trailName);
         distanceText.setText(String.format("%.1f km", trail.distance));
+        TextView locationText = findViewById(R.id.locationText);
+        locationText.setText(trail.description != null ? trail.description : "");
 
         trailMapView = findViewById(R.id.trailMapView);
         trailMapView.setTileSource(TileSourceFactory.MAPNIK);
