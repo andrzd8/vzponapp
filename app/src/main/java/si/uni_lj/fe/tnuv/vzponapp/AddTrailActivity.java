@@ -99,10 +99,8 @@ public class AddTrailActivity extends AppCompatActivity {
 
                 if (eventType == XmlPullParser.START_TAG) {
                     if (parser.getName().equals("trkpt")) {
-                        double lat = Double.parseDouble(
-                                parser.getAttributeValue(null, "lat"));
-                        double lon = Double.parseDouble(
-                                parser.getAttributeValue(null, "lon"));
+                        double lat = Double.parseDouble(parser.getAttributeValue(null, "lat"));
+                        double lon = Double.parseDouble(parser.getAttributeValue(null, "lon"));
                         points.add(new double[]{lat, lon});
                         inEle = false;
                     } else if (parser.getName().equals("ele")) {
@@ -122,7 +120,8 @@ public class AddTrailActivity extends AppCompatActivity {
 
                 eventType = parser.next();
             }
-            is.close();
+
+            if (is != null) is.close();
 
             for (int i = 1; i < points.size(); i++) {
                 parsedDistance += haversine(points.get(i - 1), points.get(i));
@@ -137,25 +136,31 @@ public class AddTrailActivity extends AppCompatActivity {
             else if (parsedElevationGain < 700) parsedDifficulty = "srednje";
             else parsedDifficulty = "težko";
 
-            gpxStatusText.setText("GPX naložen ✓");
-            statsPreview.setText(String.format(
-                    "Razdalja: %.1f km\nMaks. višina: %.0f m\nVišinska razlika: %.0f m\nTežavnost: %s",
-                    parsedDistance, parsedMaxEle, parsedElevationGain, parsedDifficulty
+            gpxStatusText.setText(R.string.add_trail_gpx_loaded);
+
+            statsPreview.setText(getString(
+                    R.string.add_trail_stats_preview,
+                    parsedDistance,
+                    parsedMaxEle,
+                    parsedElevationGain,
+                    parsedDifficulty
             ));
 
         } catch (Exception e) {
-            Toast.makeText(this, "Napaka pri branju GPX datoteke", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.add_trail_error_read_gpx, Toast.LENGTH_SHORT).show();
         }
     }
 
     private float haversine(double[] p1, double[] p2) {
-        double R = 6371;
+        double earthRadiusKm = 6371;
         double dLat = Math.toRadians(p2[0] - p1[0]);
         double dLon = Math.toRadians(p2[1] - p1[1]);
+
         double a = Math.sin(dLat / 2) * Math.sin(dLat / 2)
                 + Math.cos(Math.toRadians(p1[0])) * Math.cos(Math.toRadians(p2[0]))
                 * Math.sin(dLon / 2) * Math.sin(dLon / 2);
-        return (float) (R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
+
+        return (float) (earthRadiusKm * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a)));
     }
 
     private void saveTrail() {
@@ -163,11 +168,12 @@ public class AddTrailActivity extends AppCompatActivity {
         String desc = descriptionInput.getText().toString().trim();
 
         if (name.isEmpty()) {
-            Toast.makeText(this, "Vnesi ime poti", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.add_trail_error_name_required, Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (selectedGpxUri == null) {
-            Toast.makeText(this, "Izberi GPX datoteko", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.add_trail_error_gpx_required, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -177,14 +183,20 @@ public class AddTrailActivity extends AppCompatActivity {
 
             String fileName = name.replaceAll("[^a-zA-Z0-9]", "_")
                     + "_" + System.currentTimeMillis() + ".gpx";
+
             File destFile = new File(gpxDir, fileName);
 
             InputStream in = getContentResolver().openInputStream(selectedGpxUri);
             OutputStream out = new FileOutputStream(destFile);
+
             byte[] buf = new byte[4096];
             int len;
-            while ((len = in.read(buf)) > 0) out.write(buf, 0, len);
-            in.close();
+
+            while ((len = in.read(buf)) > 0) {
+                out.write(buf, 0, len);
+            }
+
+            if (in != null) in.close();
             out.close();
 
             Trail trail = new Trail(
@@ -200,11 +212,11 @@ public class AddTrailActivity extends AppCompatActivity {
 
             TrailRepository.addTrail(this, trail);
 
-            Toast.makeText(this, "Pot dodana!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.add_trail_success, Toast.LENGTH_SHORT).show();
             finish();
 
         } catch (Exception e) {
-            Toast.makeText(this, "Napaka pri shranjevanju", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.add_trail_error_save, Toast.LENGTH_SHORT).show();
         }
     }
 }

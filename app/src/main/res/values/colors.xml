@@ -7,7 +7,7 @@
 
     <!-- Glavna paleta aplikacije -->
     <color name="primary_orange">#FF6B35</color>
-    <color name="accent_peach">#FF9A7A</color>
+    <color name="accent_peach">@color/primary_orange</color>
     <color name="accent_blue">#6BB5FF</color>
 
     <!-- Ozadja -->
@@ -52,4 +52,5 @@
     <color name="colorPrimary">@color/primary_orange</color>
     <color name="colorSecondary">@color/accent_blue</color>
     <color name="colorOnSurface">@color/text_primary</color>
+
 </resources>

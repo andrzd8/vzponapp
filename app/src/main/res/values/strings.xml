@@ -124,4 +124,13 @@
     <string name="delete_trail_cancel">Prekliči</string>
     <string name="delete_trail_success">Pot izbrisana</string>
 
+    <!-- Add trail messages -->
+    <string name="add_trail_gpx_loaded">GPX naložen ✓</string>
+    <string name="add_trail_stats_preview">Razdalja: %.1f km&#10;Maks. višina: %.0f m&#10;Višinska razlika: %.0f m&#10;Težavnost: %s</string>
+    <string name="add_trail_error_read_gpx">Napaka pri branju GPX datoteke</string>
+    <string name="add_trail_error_name_required">Vnesi ime poti</string>
+    <string name="add_trail_error_gpx_required">Izberi GPX datoteko</string>
+    <string name="add_trail_success">Pot dodana!</string>
+    <string name="add_trail_error_save">Napaka pri shranjevanju</string>
+
 </resources>
