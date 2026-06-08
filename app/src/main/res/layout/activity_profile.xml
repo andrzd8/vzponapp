@@ -14,9 +14,9 @@
             android:id="@+id/backButton"
             android:layout_width="52dp"
             android:layout_height="52dp"
-            android:backgroundTint="#FF9A7A"
+            android:backgroundTint="@color/accent_peach"
             android:text="@string/detail_back"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="20sp" />
 
         <TextView
@@ -24,8 +24,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:gravity="center"
-            android:text="Moj profil"
-            android:textColor="#FFFFFF"
+            android:text="@string/profile_title_full"
+            android:textColor="@color/text_primary"
             android:textSize="32sp"
             android:textStyle="bold" />
 
@@ -35,10 +35,10 @@
             android:layout_height="135dp"
             android:layout_gravity="center"
             android:layout_marginTop="28dp"
-            android:background="#DDEEFF"
+            android:background="@color/profile_image_background"
             android:padding="20dp"
-            android:src="@android:drawable/ic_menu_camera"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:src="@android:drawable/ic_menu_camera" />
 
         <Button
             android:id="@+id/changeImageButton"
@@ -46,16 +46,16 @@
             android:layout_height="44dp"
             android:layout_gravity="center"
             android:layout_marginTop="12dp"
-            android:backgroundTint="#FF9A7A"
-            android:text="Zamenjaj sliko"
-            android:textColor="#FFFFFF" />
+            android:backgroundTint="@color/accent_peach"
+            android:text="@string/profile_change_image"
+            android:textColor="@color/text_primary" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
-            android:text="Ime"
-            android:textColor="#FFFFFF"
+            android:text="@string/profile_name_label"
+            android:textColor="@color/text_primary"
             android:textSize="15sp" />
 
         <EditText
@@ -63,19 +63,19 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="8dp"
-            android:background="#252525"
+            android:background="@color/input_background"
+            android:hint="@string/profile_name_hint"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
-            android:textColor="#FFFFFF"
-            android:textColorHint="#BDBDBD"
-            android:hint="Vnesi ime" />
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_hint" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="Stopnja izkušenj"
-            android:textColor="#FFFFFF"
+            android:text="@string/profile_experience_label"
+            android:textColor="@color/text_primary"
             android:textSize="15sp" />
 
         <Spinner
@@ -83,18 +83,19 @@
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="8dp"
-            android:background="#252525"
-            android:popupBackground="#252525" />
+            android:background="@color/input_background"
+            android:popupBackground="@color/input_background" />
 
         <Button
             android:id="@+id/saveButton"
             android:layout_width="match_parent"
             android:layout_height="54dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="#FF9A7A"
-            android:text="Shrani spremembe"
-            android:textColor="#FFFFFF"
+            android:backgroundTint="@color/accent_peach"
+            android:text="@string/profile_save_changes"
+            android:textColor="@color/text_primary"
             android:textStyle="bold" />
 
     </LinearLayout>
+
 </ScrollView>

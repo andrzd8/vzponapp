@@ -1,19 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Primary palette -->
-    <color name="colorPrimary">#FF6B35</color>
-    <color name="colorSecondary">#4A90D9</color>
-    <color name="colorBackground">#1A1A2E</color>
-    <color name="colorSurface">#16213E</color>
-    <color name="colorSurfaceVariant">#0F3460</color>
+
+    <!-- Osnovne barve -->
     <color name="white">#FFFFFF</color>
+    <color name="transparent">#00000000</color>
 
-    <!-- Barve nevarnosti -->
-    <color name="colorDifficultyDanger">#FF4444</color>
-    <color name="colorDifficultyWarning">#FF8C00</color>
-    <color name="colorDifficultyEasy">#44BB77</color>
+    <!-- Glavna paleta aplikacije -->
+    <color name="primary_orange">#FF6B35</color>
+    <color name="accent_peach">#FF9A7A</color>
+    <color name="accent_blue">#6BB5FF</color>
 
-    <!-- Text -->
-    <color name="colorOnSurface">#FFFFFF</color>
-    <color name="colorOnSurfaceMuted">#AAAACC</color>
+    <!-- Ozadja -->
+    <color name="background_dark">#0E2233</color>
+    <color name="surface_dark">#112840</color>
+    <color name="surface_darker">#0A1520</color>
+    <color name="bottom_nav_bg">#252525</color>
+    <color name="input_background">#252525</color>
+    <color name="overlay_black">#CC000000</color>
+    <color name="overlay_white">#20FFFFFF</color>
+
+    <!-- Tekst -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B8C5D1</color>
+    <color name="text_muted">#888888</color>
+    <color name="text_disabled">#666666</color>
+    <color name="text_hint">#BDBDBD</color>
+
+    <!-- Kartice -->
+    <color name="card_background">#1C2B3A</color>
+    <color name="card_text_secondary">#AABBCC</color>
+    <color name="card_chip_background">#0D1F2D</color>
+    <color name="card_chip_text">#8FA8BD</color>
+
+    <!-- Izbire / dialogi -->
+    <color name="selection_background">#1A2E3F</color>
+    <color name="dialog_button_secondary">#1A3A52</color>
+    <color name="danger_background">#8B1E1E</color>
+
+    <!-- Status / težavnost -->
+    <color name="difficulty_danger">#FF4444</color>
+    <color name="difficulty_warning">#FF8C00</color>
+    <color name="difficulty_easy">#44BB77</color>
+    <color name="danger_chip_background">#1A0D0D</color>
+    <color name="safe_chip_background">#0D1A0D</color>
+
+    <!-- Posebno -->
+    <color name="profile_image_background">#DDEEFF</color>
+    <color name="equipment_text">#FFB08F</color>
+
+    <!-- Aliasi za temo aplikacije -->
+    <color name="colorPrimary">@color/primary_orange</color>
+    <color name="colorSecondary">@color/accent_blue</color>
+    <color name="colorOnSurface">@color/text_primary</color>
 </resources>

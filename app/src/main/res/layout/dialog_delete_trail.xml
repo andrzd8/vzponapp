@@ -2,15 +2,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="320dp"
     android:layout_height="wrap_content"
+    android:background="@drawable/bg_onboarding"
     android:orientation="vertical"
-    android:padding="24dp"
-    android:background="@drawable/bg_onboarding">
+    android:padding="24dp">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/delete_trail_title"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_primary"
         android:textSize="20sp"
         android:textStyle="bold" />
 
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="@string/delete_trail_message"
-        android:textColor="#D7DEE5"
+        android:textColor="@color/text_secondary"
         android:textSize="15sp" />
 
     <LinearLayout
@@ -34,17 +34,17 @@
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_marginEnd="12dp"
-            android:backgroundTint="#1A3A52"
+            android:backgroundTint="@color/dialog_button_secondary"
             android:text="@string/delete_trail_cancel"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/text_primary" />
 
         <Button
             android:id="@+id/confirmDeleteButton"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:backgroundTint="#8B1E1E"
+            android:backgroundTint="@color/danger_background"
             android:text="@string/delete_trail_confirm"
-            android:textColor="#FFFFFF" />
+            android:textColor="@color/text_primary" />
 
     </LinearLayout>
 

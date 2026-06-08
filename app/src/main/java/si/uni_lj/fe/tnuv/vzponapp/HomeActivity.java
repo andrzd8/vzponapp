@@ -45,13 +45,12 @@ public class HomeActivity extends AppCompatActivity {
             LinearLayoutManager llm = (LinearLayoutManager) recyclerView.getLayoutManager();
             int pos = llm != null ? llm.findFirstCompletelyVisibleItemPosition() : 0;
             if (pos < 0) pos = 0;
-            Intent intent = new Intent(this, MapActivity.class);
-            intent.putExtra("trail_index", pos);
-            startActivity(intent);
+
+            NavigationHelper.openMap(this, pos);
         });
 
         navProfile.setOnClickListener(v ->
-                startActivity(new Intent(this, ProfileActivity.class)));
+                NavigationHelper.openProfile(this));
 
         addTrailButton.setOnClickListener(v ->
                 startActivity(new Intent(this, AddTrailActivity.class)));

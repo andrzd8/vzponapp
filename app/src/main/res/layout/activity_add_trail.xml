@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_onboarding"
     android:orientation="vertical"
     android:padding="24dp">
 
@@ -9,61 +10,83 @@
         android:id="@+id/backButton"
         android:layout_width="52dp"
         android:layout_height="52dp"
-        android:backgroundTint="#FF9A7A"
+        android:backgroundTint="@color/accent_peach"
         android:text="@string/detail_back"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/white"
         android:textSize="20sp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Dodaj pot"
+        android:layout_marginTop="24dp"
+        android:layout_marginBottom="24dp"
+        android:text="@string/add_trail_title"
+        android:textColor="@color/white"
         android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp" />
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/nameInput"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Ime poti"
+        android:layout_height="54dp"
+        android:layout_marginBottom="12dp"
+        android:background="@color/input_background"
+        android:hint="@string/add_trail_name_hint"
         android:inputType="text"
-        android:layout_marginBottom="12dp" />
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/text_hint" />
 
     <EditText
         android:id="@+id/descriptionInput"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Opis"
+        android:layout_marginBottom="20dp"
+        android:background="@color/input_background"
+        android:hint="@string/add_trail_description_hint"
         android:inputType="textMultiLine"
+        android:minHeight="90dp"
         android:minLines="2"
-        android:layout_marginBottom="20dp" />
+        android:paddingStart="16dp"
+        android:paddingTop="14dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="14dp"
+        android:textColor="@color/white"
+        android:textColorHint="@color/text_hint" />
 
     <Button
         android:id="@+id/pickGpxButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Izberi GPX datoteko"
-        android:layout_marginBottom="12dp" />
+        android:layout_height="54dp"
+        android:layout_marginBottom="12dp"
+        android:backgroundTint="@color/accent_peach"
+        android:text="@string/add_trail_pick_gpx"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/gpxStatusText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ni izbrane datoteke"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:text="@string/add_trail_no_file"
+        android:textColor="@color/text_secondary" />
 
     <TextView
         android:id="@+id/statsPreview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:lineSpacingExtra="4dp"
-        android:layout_marginBottom="24dp" />
+        android:textColor="@color/text_secondary" />
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Shrani pot" />
+        android:layout_height="54dp"
+        android:backgroundTint="@color/primary_orange"
+        android:text="@string/add_trail_save"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
 </LinearLayout>
