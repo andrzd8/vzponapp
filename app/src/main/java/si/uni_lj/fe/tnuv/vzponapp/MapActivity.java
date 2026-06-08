@@ -84,16 +84,17 @@ public class MapActivity extends AppCompatActivity {
         Trail selectedTrail = TrailRepository.trails[trailIndex];
         drawGpxTrack(selectedTrail.gpxPath);
 
-        TextView navHome = findViewById(R.id.navHome);
-        TextView navProfile = findViewById(R.id.navProfile);
-
-        navHome.setOnClickListener(v -> {
-            startActivity(new Intent(MapActivity.this, HomeActivity.class));
+        findViewById(R.id.navHome).setOnClickListener(v -> {
+            NavigationHelper.openHome(this);
             finish();
         });
 
-        navProfile.setOnClickListener(v -> {
-            startActivity(new Intent(MapActivity.this, ProfileActivity.class));
+        findViewById(R.id.navMap).setOnClickListener(v -> {
+            // Že smo na zemljevidu
+        });
+
+        findViewById(R.id.navProfile).setOnClickListener(v -> {
+            NavigationHelper.openProfile(this);
             finish();
         });
     }

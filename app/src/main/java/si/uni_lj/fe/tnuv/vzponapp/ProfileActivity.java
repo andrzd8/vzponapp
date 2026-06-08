@@ -18,35 +18,52 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class ProfileActivity extends AppCompatActivity {
 
-    ImageView profileImage;
-    EditText nameInput;
-    Spinner experienceSpinner;
-    Button backButton, saveButton, changeImageButton;
+    private static final String PREFS_NAME = "vzpon_prefs";
+    private static final String KEY_NAME = "name";
+    private static final String KEY_EXPERIENCE = "experience";
+    private static final String KEY_PROFILE_IMAGE_URI = "profile_image_uri";
 
-    SharedPreferences sharedPref;
+    private ImageView profileImage;
+    private EditText nameInput;
+    private Spinner experienceSpinner;
+    private Button backButton, saveButton, changeImageButton;
 
-    String[] experienceValues = {
+    private SharedPreferences sharedPref;
+
+    private final String[] experienceValues = {
             "hiker",
             "mountaineer",
             "alpinist"
     };
 
-    ActivityResultLauncher<Intent> imagePickerLauncher;
+    private ActivityResultLauncher<Intent> imagePickerLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        bindViews();
+
+        sharedPref = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE);
+
+        setupSpinner();
+        setupImagePicker();
+        loadProfileData();
+        setupClickListeners();
+        setupBottomNavigation();
+    }
+
+    private void bindViews() {
         profileImage = findViewById(R.id.profileImage);
         nameInput = findViewById(R.id.nameInput);
         experienceSpinner = findViewById(R.id.experienceSpinner);
         backButton = findViewById(R.id.backButton);
         saveButton = findViewById(R.id.saveButton);
         changeImageButton = findViewById(R.id.changeImageButton);
+    }
 
-        sharedPref = getSharedPreferences("vzpon_prefs", Context.MODE_PRIVATE);
-
+    private void setupSpinner() {
         String[] experienceLabels = {
                 getString(R.string.experience_hiker_label),
                 getString(R.string.experience_mountaineer_label),
@@ -60,17 +77,27 @@ public class ProfileActivity extends AppCompatActivity {
         );
 
         adapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-
         experienceSpinner.setAdapter(adapter);
+    }
 
-        setupImagePicker();
-        loadProfileData();
-
+    private void setupClickListeners() {
         backButton.setOnClickListener(v -> finish());
-
         changeImageButton.setOnClickListener(v -> openImagePicker());
-
         saveButton.setOnClickListener(v -> saveProfileData());
+    }
+
+    private void setupBottomNavigation() {
+        findViewById(R.id.navHome).setOnClickListener(v -> {
+            NavigationHelper.openHome(this);
+            finish();
+        });
+
+        findViewById(R.id.navMap).setOnClickListener(v ->
+                NavigationHelper.openMap(this, 0));
+
+        findViewById(R.id.navProfile).setOnClickListener(v -> {
+            // Trenutno smo že na profilu.
+        });
     }
 
     private void setupImagePicker() {
@@ -91,13 +118,13 @@ public class ProfileActivity extends AppCompatActivity {
                             }
 
                             sharedPref.edit()
-                                    .putString("profile_image_uri", imageUri.toString())
+                                    .putString(KEY_PROFILE_IMAGE_URI, imageUri.toString())
                                     .apply();
 
                             profileImage.setImageURI(imageUri);
                         }
                     } else {
-                        Toast.makeText(this, getString(R.string.image_selection_cancelled), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, R.string.image_selection_cancelled, Toast.LENGTH_SHORT).show();
                     }
                 }
         );
@@ -114,19 +141,17 @@ public class ProfileActivity extends AppCompatActivity {
     }
 
     private void loadProfileData() {
-        String name = sharedPref.getString("name", getString(R.string.profile_default_user));
-        String experience = sharedPref.getString("experience", "hiker");
-        String imageUriString = sharedPref.getString("profile_image_uri", "");
+        String name = sharedPref.getString(
+                KEY_NAME,
+                getString(R.string.profile_default_user)
+        );
+
+        String experience = sharedPref.getString(KEY_EXPERIENCE, experienceValues[0]);
+        String imageUriString = sharedPref.getString(KEY_PROFILE_IMAGE_URI, "");
 
         nameInput.setText(name);
 
-        int selectedIndex = 0;
-        for (int i = 0; i < experienceValues.length; i++) {
-            if (experienceValues[i].equals(experience)) {
-                selectedIndex = i;
-                break;
-            }
-        }
+        int selectedIndex = getExperienceIndex(experience);
         experienceSpinner.setSelection(selectedIndex);
 
         if (!imageUriString.isEmpty()) {
@@ -134,11 +159,20 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
 
+    private int getExperienceIndex(String experience) {
+        for (int i = 0; i < experienceValues.length; i++) {
+            if (experienceValues[i].equals(experience)) {
+                return i;
+            }
+        }
+        return 0;
+    }
+
     private void saveProfileData() {
         String newName = nameInput.getText().toString().trim();
 
         if (newName.isEmpty()) {
-            Toast.makeText(this, getString(R.string.profile_name_empty), Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.profile_name_empty, Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -146,10 +180,10 @@ public class ProfileActivity extends AppCompatActivity {
         String newExperience = experienceValues[selectedPosition];
 
         sharedPref.edit()
-                .putString("name", newName)
-                .putString("experience", newExperience)
+                .putString(KEY_NAME, newName)
+                .putString(KEY_EXPERIENCE, newExperience)
                 .apply();
 
-        Toast.makeText(this, getString(R.string.profile_saved), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, R.string.profile_saved, Toast.LENGTH_SHORT).show();
     }
 }

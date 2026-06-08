@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/bottomNav"
+    android:layout_width="match_parent"
+    android:layout_height="65dp"
+    android:background="@color/bottom_nav_bg"
+    android:gravity="center"
+    android:orientation="horizontal">
+
+    <LinearLayout
+        android:id="@+id/navHome"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/navHomeIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nav_home"
+            android:textSize="22sp" />
+
+        <View
+            android:id="@+id/navHomeDot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/transparent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navMap"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/navMapIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.4"
+            android:text="@string/nav_map"
+            android:textSize="22sp" />
+
+        <View
+            android:id="@+id/navMapDot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/transparent" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/navProfile"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/navProfileIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.4"
+            android:text="@string/nav_profile"
+            android:textSize="22sp" />
+
+        <View
+            android:id="@+id/navProfileDot"
+            android:layout_width="5dp"
+            android:layout_height="5dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/transparent" />
+    </LinearLayout>
+
+</LinearLayout>

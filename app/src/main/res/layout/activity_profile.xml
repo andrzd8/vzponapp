@@ -1,101 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_onboarding">
+    android:background="@drawable/bg_onboarding"
+    android:orientation="vertical">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/bg_onboarding">
 
-        <Button
-            android:id="@+id/backButton"
-            android:layout_width="52dp"
-            android:layout_height="52dp"
-            android:backgroundTint="@color/accent_peach"
-            android:text="@string/detail_back"
-            android:textColor="@color/text_primary"
-            android:textSize="20sp" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
-            android:gravity="center"
-            android:text="@string/profile_title_full"
-            android:textColor="@color/text_primary"
-            android:textSize="32sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:padding="24dp">
 
-        <ImageView
-            android:id="@+id/profileImage"
-            android:layout_width="135dp"
-            android:layout_height="135dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="28dp"
-            android:background="@color/profile_image_background"
-            android:padding="20dp"
-            android:scaleType="centerCrop"
-            android:src="@android:drawable/ic_menu_camera" />
+            <Button
+                android:id="@+id/backButton"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:backgroundTint="@color/accent_peach"
+                android:text="@string/detail_back"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp" />
 
-        <Button
-            android:id="@+id/changeImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="44dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="12dp"
-            android:backgroundTint="@color/accent_peach"
-            android:text="@string/profile_change_image"
-            android:textColor="@color/text_primary" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:gravity="center"
+                android:text="@string/profile_title_full"
+                android:textColor="@color/text_primary"
+                android:textSize="32sp"
+                android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:text="@string/profile_name_label"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp" />
+            <ImageView
+                android:id="@+id/profileImage"
+                android:layout_width="135dp"
+                android:layout_height="135dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="28dp"
+                android:background="@color/profile_image_background"
+                android:padding="20dp"
+                android:scaleType="centerCrop"
+                android:src="@android:drawable/ic_menu_camera" />
 
-        <EditText
-            android:id="@+id/nameInput"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/input_background"
-            android:hint="@string/profile_name_hint"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:textColor="@color/text_primary"
-            android:textColorHint="@color/text_hint" />
+            <Button
+                android:id="@+id/changeImageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:backgroundTint="@color/accent_peach"
+                android:text="@string/profile_change_image"
+                android:textColor="@color/text_primary" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/profile_experience_label"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="28dp"
+                android:text="@string/profile_name_label"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
 
-        <Spinner
-            android:id="@+id/experienceSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="8dp"
-            android:background="@color/input_background"
-            android:popupBackground="@color/input_background" />
+            <EditText
+                android:id="@+id/nameInput"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/input_background"
+                android:hint="@string/profile_name_hint"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint" />
 
-        <Button
-            android:id="@+id/saveButton"
-            android:layout_width="match_parent"
-            android:layout_height="54dp"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/accent_peach"
-            android:text="@string/profile_save_changes"
-            android:textColor="@color/text_primary"
-            android:textStyle="bold" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/profile_experience_label"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp" />
 
-    </LinearLayout>
+            <Spinner
+                android:id="@+id/experienceSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/input_background"
+                android:popupBackground="@color/input_background" />
 
-</ScrollView>
+            <Button
+                android:id="@+id/saveButton"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="30dp"
+                android:backgroundTint="@color/accent_peach"
+                android:text="@string/profile_save_changes"
+                android:textColor="@color/text_primary"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <include layout="@layout/bottom_nav" />
+
+</LinearLayout>
