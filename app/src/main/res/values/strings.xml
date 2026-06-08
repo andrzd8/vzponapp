@@ -10,34 +10,40 @@
 
     <!-- Home -->
     <string name="home_header">Najboljša izbira za vikend</string>
+    <string name="home_add_trail">+ Dodaj</string>
+    <string name="home_empty_title">Ni dodanih poti</string>
+    <string name="home_empty_subtitle">Pritisni "+ Dodaj" za svojo prvo pot</string>
     <string name="filter_all">Priporočeno za danes</string>
     <string name="filter_safe">🟢 Samo varne poti</string>
     <string name="no_trails">Ni varnih poti za danes, ostani doma.</string>
     <string name="loading">…</string>
-    <string name="home_add_trail">+ Dodaj</string>
-    <string name="home_empty_title">Ni dodanih poti</string>
-    <string name="home_empty_subtitle">Pritisni "+ Dodaj" za svojo prvo pot</string>
 
     <!-- Onboarding -->
     <string name="onboarding_title">Pozdravljeni!</string>
     <string name="onboarding_subtitle">Kako ti je ime?</string>
     <string name="onboarding_name_hint">Vnesi svoje ime</string>
-
     <string name="onboarding_ready_title">Tvoja pripravljenost</string>
     <string name="onboarding_ready_subtitle">Izberi stopnjo pripravljenosti</string>
+    <string name="onboarding_next">Naprej</string>
+    <string name="onboarding_start">Začni</string>
+    <string name="onboarding_dots_1">● ○ ○</string>
+    <string name="onboarding_dots_2">○ ● ○</string>
+    <string name="onboarding_dots_3">○ ○ ●</string>
 
     <string name="error_enter_name_short">Najprej vnesi ime</string>
     <string name="error_choose_experience">Izberi stopnjo pripravljenosti</string>
 
-    <string name="onboarding_next">Naprej</string>
-    <string name="onboarding_start">Začni</string>
-
-    <string name="onboarding_dots_1">● ○</string>
-    <string name="onboarding_dots_2">○ ●</string>
-
     <string name="exp_hiker">🥾 Pohodnik&#10;</string>
     <string name="exp_mountaineer">⛏️ Gornik&#10;</string>
     <string name="exp_alpinist">🧗 Alpinist&#10;</string>
+
+    <!-- Add trail -->
+    <string name="add_trail_title">Dodaj pot</string>
+    <string name="add_trail_name_hint">Ime poti</string>
+    <string name="add_trail_description_hint">Opis</string>
+    <string name="add_trail_pick_gpx">Izberi GPX datoteko</string>
+    <string name="add_trail_no_file">Ni izbrane datoteke</string>
+    <string name="add_trail_save">Shrani pot</string>
 
     <!-- Trail details -->
     <string name="detail_back">←</string>
@@ -45,25 +51,34 @@
     <string name="detail_weather_label">Razmere</string>
     <string name="detail_forecast_title">Vremenska napoved</string>
     <string name="detail_elevation_title">Višinski profil</string>
-
     <string name="detail_equipment_title">Priporočena oprema</string>
+    <string name="detail_refresh">🔄 Osveži</string>
+    <string name="detail_open_map">🗺️ Odpri zemljevid</string>
+    <string name="detail_delete">Izbriši pot</string>
+
+    <string name="detail_equipment_ai_title">🎒 Seznam opreme glede na vreme</string>
+    <string name="detail_equipment_ai_subtitle">AI asistent pripravi seznam in omogoča pogovor</string>
+    <string name="detail_ai_open">🤖 Odpri</string>
+
     <string name="detail_equipment_1">🥾 Pohodni čevlji</string>
     <string name="detail_equipment_2">🧥 Vetrovka</string>
     <string name="detail_equipment_3">💧 2L vode</string>
 
-    <string name="detail_refresh">🔄 Osveži</string>
-    <string name="detail_save">Shrani turo</string>
-    <string name="detail_open_map">🗺️ Odpri zemljevid</string>
-
     <!-- Map -->
     <string name="map_title">Zemljevid poti</string>
+    <string name="map_radar_loading">Nalagam radarsko sliko ...</string>
+
+    <!-- Gemini -->
+    <string name="gemini_back">← Nazaj</string>
+    <string name="gemini_title">🤖 AI Planinski Asistent</string>
+    <string name="gemini_equipment_title">🎒 Priporočena oprema</string>
+    <string name="gemini_equipment_subtitle">Odkljukaj ko spakiraš</string>
+    <string name="gemini_chat_title">💬 Pogovor z AI</string>
+    <string name="gemini_chat_subtitle">Postavi vprašanje o poti ali opremi</string>
+    <string name="gemini_chat_hint">Vprašaj AI asistenta...</string>
+    <string name="gemini_send">↑</string>
 
     <!-- Profile -->
-    <string name="profile_saved">Profil shranjen</string>
-    <string name="profile_name_empty">Ime ne sme biti prazno</string>
-    <string name="image_selection_cancelled">Izbira slike preklicana</string>
-    <string name="profile_local_account">Lokalni uporabnik</string>
-
     <string name="profile_title_full">Moj profil</string>
     <string name="profile_change_image">Zamenjaj sliko</string>
     <string name="profile_name_label">Ime</string>
@@ -71,6 +86,10 @@
     <string name="profile_experience_label">Stopnja izkušenj</string>
     <string name="profile_save_changes">Shrani spremembe</string>
     <string name="profile_default_user">Uporabnik</string>
+    <string name="profile_saved">Profil shranjen</string>
+    <string name="profile_name_empty">Ime ne sme biti prazno</string>
+    <string name="profile_local_account">Lokalni uporabnik</string>
+    <string name="image_selection_cancelled">Izbira slike preklicana</string>
 
     <!-- Card placeholders -->
     <string name="card_title_placeholder">Ime ture</string>
@@ -78,7 +97,6 @@
     <string name="card_distance_placeholder">– km</string>
     <string name="card_weather_placeholder">...</string>
     <string name="card_difficulty_placeholder">–</string>
-
     <string name="card_distance_icon">↗ </string>
     <string name="card_weather_icon_danger">⚠ </string>
     <string name="card_difficulty_icon_easy">✓ </string>
@@ -89,7 +107,7 @@
     <string name="difficulty_tezko">težko</string>
     <string name="difficulty_nevarno">nevarno</string>
 
-    <!-- Varnost/vreme -->
+    <!-- Varnost / vreme -->
     <string name="safety_varno">varno</string>
     <string name="safety_tvegano">tvegano</string>
     <string name="safety_nevarno">nevarno</string>
@@ -99,6 +117,7 @@
     <string name="experience_mountaineer_label">Gornik</string>
     <string name="experience_alpinist_label">Alpinist</string>
 
+    <!-- Delete dialog -->
     <string name="delete_trail_title">Izbriši pot</string>
     <string name="delete_trail_message">Ali res želiš izbrisati to pot?</string>
     <string name="delete_trail_confirm">Izbriši</string>
@@ -106,4 +125,3 @@
     <string name="delete_trail_success">Pot izbrisana</string>
 
 </resources>
-

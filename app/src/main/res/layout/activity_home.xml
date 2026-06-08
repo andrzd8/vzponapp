@@ -5,7 +5,6 @@
     android:background="@drawable/bg_onboarding"
     android:orientation="vertical">
 
-    <!-- Header z gumbom za dodajanje -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -21,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/home_header"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -29,16 +28,15 @@
             android:id="@+id/addTrailButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="#FF6B35"
-            android:text="@string/home_add_trail"
-            android:textColor="#FFFFFF"
-            android:textSize="13sp"
             android:paddingStart="14dp"
-            android:paddingEnd="14dp" />
+            android:paddingEnd="14dp"
+            android:backgroundTint="@color/primary_orange"
+            android:text="@string/home_add_trail"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp" />
 
     </LinearLayout>
 
-    <!-- Empty state — viden ko ni poti -->
     <LinearLayout
         android:id="@+id/emptyState"
         android:layout_width="match_parent"
@@ -53,14 +51,14 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
             android:text="@string/home_empty_title"
-            android:textColor="#AAAAAA"
+            android:textColor="@color/text_muted"
             android:textSize="18sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/home_empty_subtitle"
-            android:textColor="#666666"
+            android:textColor="@color/text_disabled"
             android:textSize="14sp" />
 
     </LinearLayout>
@@ -75,11 +73,10 @@
         android:paddingStart="24dp"
         android:paddingEnd="24dp" />
 
-    <!-- Bottom nav -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="65dp"
-        android:background="#252525"
+        android:background="@color/bottom_nav_bg"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -103,7 +100,7 @@
                 android:layout_width="5dp"
                 android:layout_height="5dp"
                 android:layout_marginTop="4dp"
-                android:background="#FF6B35" />
+                android:background="@color/primary_orange" />
 
         </LinearLayout>
 
@@ -128,7 +125,7 @@
                 android:layout_width="5dp"
                 android:layout_height="5dp"
                 android:layout_marginTop="4dp"
-                android:background="@android:color/transparent" />
+                android:background="@color/transparent" />
 
         </LinearLayout>
 
@@ -153,7 +150,7 @@
                 android:layout_width="5dp"
                 android:layout_height="5dp"
                 android:layout_marginTop="4dp"
-                android:background="@android:color/transparent" />
+                android:background="@color/transparent" />
 
         </LinearLayout>
 

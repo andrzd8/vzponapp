@@ -3,11 +3,10 @@
     android:layout_width="310dp"
     android:layout_height="match_parent"
     android:layout_marginEnd="16dp"
-    android:background="#1C2B3A"
-    android:orientation="vertical"
-    android:elevation="6dp">
+    android:background="@color/card_background"
+    android:elevation="6dp"
+    android:orientation="vertical">
 
-    <!-- Map preview -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -22,11 +21,10 @@
             android:id="@+id/cardClickOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent" />
+            android:background="@color/transparent" />
 
     </FrameLayout>
 
-    <!-- Content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +38,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/card_title_placeholder"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="22sp"
             android:textStyle="bold" />
 
@@ -52,23 +50,21 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@string/card_desc_placeholder"
-            android:textColor="#AABBCC"
+            android:textColor="@color/card_text_secondary"
             android:textSize="13sp" />
 
-        <!-- Badges B — icon + text, soft colored fill -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
             android:orientation="horizontal">
 
-            <!-- Razdalja -->
             <LinearLayout
                 android:id="@+id/cardDistanceBadge"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_weight="1"
-                android:background="#0D1F2D"
+                android:background="@color/card_chip_background"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="8dp"
@@ -78,7 +74,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/card_distance_icon"
-                    android:textColor="#8FA8BD"
+                    android:textColor="@color/card_chip_text"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
@@ -87,20 +83,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/card_distance_placeholder"
-                    android:textColor="#8FA8BD"
+                    android:textColor="@color/card_chip_text"
                     android:textSize="13sp"
                     android:textStyle="bold" />
 
             </LinearLayout>
 
-            <!-- Vreme/varnost -->
             <LinearLayout
                 android:id="@+id/cardWeatherBadge"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:background="#1A0D0D"
+                android:background="@color/danger_chip_background"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="8dp"
@@ -123,14 +118,13 @@
 
             </LinearLayout>
 
-            <!-- Težavnost -->
             <LinearLayout
                 android:id="@+id/cardDifficultyBadge"
                 android:layout_width="0dp"
                 android:layout_height="36dp"
                 android:layout_marginStart="8dp"
                 android:layout_weight="1"
-                android:background="#0D1A0D"
+                android:background="@color/safe_chip_background"
                 android:gravity="center"
                 android:orientation="horizontal"
                 android:paddingStart="8dp"

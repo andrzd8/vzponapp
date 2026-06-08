@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0E2233">
+    android:background="@color/background_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,9 +25,9 @@
                 android:layout_width="52dp"
                 android:layout_height="52dp"
                 android:layout_margin="18dp"
-                android:backgroundTint="#FF9A7A"
+                android:backgroundTint="@color/accent_peach"
                 android:text="@string/detail_back"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="20sp" />
 
         </FrameLayout>
@@ -43,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/card_title_placeholder"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="30sp"
                 android:textStyle="bold" />
 
@@ -53,10 +53,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
                 android:text="@string/card_desc_placeholder"
-                android:textColor="#D7DEE5"
+                android:textColor="@color/text_secondary"
                 android:textSize="15sp" />
 
-            <!-- Razdalja + Vreme -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,8 +65,8 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="90dp"
-                    android:layout_weight="1"
                     android:layout_marginEnd="10dp"
+                    android:layout_weight="1"
                     android:background="@drawable/bg_onboarding"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -76,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detail_distance_label"
-                        android:textColor="#B8C5D1"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
                     <TextView
@@ -84,7 +83,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/card_distance_placeholder"
-                        android:textColor="#FFFFFF"
+                        android:textColor="@color/text_primary"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -102,7 +101,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/detail_weather_label"
-                        android:textColor="#B8C5D1"
+                        android:textColor="@color/text_secondary"
                         android:textSize="13sp" />
 
                     <TextView
@@ -110,7 +109,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/safety_varno"
-                        android:textColor="#FFB08F"
+                        android:textColor="@color/equipment_text"
                         android:textSize="20sp"
                         android:textStyle="bold" />
 
@@ -118,13 +117,12 @@
 
             </LinearLayout>
 
-            <!-- Osveženo + Refresh -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/weatherUpdatedText"
@@ -132,29 +130,28 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text=""
-                    android:textColor="#888888"
+                    android:textColor="@color/text_muted"
                     android:textSize="12sp" />
 
                 <Button
                     android:id="@+id/refreshButton"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
-                    android:backgroundTint="#1A3A52"
+                    android:backgroundTint="@color/dialog_button_secondary"
                     android:text="@string/detail_refresh"
-                    android:textColor="#FFFFFF"
+                    android:textColor="@color/text_primary"
                     android:textSize="12sp" />
 
             </LinearLayout>
 
-            <!-- Napoved -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
                 android:text="@string/detail_forecast_title"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginTop="34dp" />
+                android:textStyle="bold" />
 
             <HorizontalScrollView
                 android:id="@+id/forecastScrollView"
@@ -168,21 +165,20 @@
                     android:id="@+id/forecastDailyContainer"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@color/surface_dark"
                     android:orientation="horizontal"
-                    android:background="#112840"
                     android:padding="4dp" />
 
             </HorizontalScrollView>
 
-            <!-- Višinski profil -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
                 android:text="@string/detail_elevation_title"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginTop="34dp" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:id="@+id/elevationContainer"
@@ -190,24 +186,23 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical" />
 
-            <!-- Oprema -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
                 android:text="@string/detail_equipment_title"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textSize="22sp"
-                android:textStyle="bold"
-                android:layout_marginTop="34dp" />
+                android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
-                android:background="#112840"
-                android:padding="20dp"
+                android:background="@color/surface_dark"
+                android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:gravity="center_vertical">
+                android:padding="20dp">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -218,8 +213,8 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="🎒 Seznam opreme glede na vreme"
-                        android:textColor="#FFFFFF"
+                        android:text="@string/detail_equipment_ai_title"
+                        android:textColor="@color/text_primary"
                         android:textSize="14sp"
                         android:textStyle="bold" />
 
@@ -227,8 +222,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:text="AI asistent pripravi seznam in omogoča pogovor"
-                        android:textColor="#888888"
+                        android:text="@string/detail_equipment_ai_subtitle"
+                        android:textColor="@color/text_muted"
                         android:textSize="12sp" />
 
                 </LinearLayout>
@@ -238,24 +233,21 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="12dp"
-                    android:backgroundTint="#FF9A7A"
-                    android:text="🤖 Odpri"
-                    android:textColor="#FFFFFF"
+                    android:backgroundTint="@color/accent_peach"
+                    android:text="@string/detail_ai_open"
+                    android:textColor="@color/text_primary"
                     android:textSize="13sp" />
 
             </LinearLayout>
-
-            <!-- izbrisi + Karta -->
 
             <Button
                 android:id="@+id/mapButton"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="30dp"
-                android:backgroundTint="#1A3A52"
+                android:backgroundTint="@color/dialog_button_secondary"
                 android:text="@string/detail_open_map"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/text_primary"
                 android:textStyle="bold" />
 
             <Button
@@ -264,9 +256,9 @@
                 android:layout_height="56dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginBottom="30dp"
-                android:backgroundTint="#8B1E1E"
-                android:text="Izbriši pot"
-                android:textColor="#FFFFFF"
+                android:backgroundTint="@color/danger_background"
+                android:text="@string/detail_delete"
+                android:textColor="@color/text_primary"
                 android:textStyle="bold" />
 
         </LinearLayout>

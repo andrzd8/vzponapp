@@ -12,7 +12,7 @@
         android:layout_marginTop="45dp"
         android:gravity="center"
         android:text="@string/map_title"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_primary"
         android:textSize="30sp"
         android:textStyle="bold" />
 
@@ -23,7 +23,7 @@
         android:layout_marginTop="8dp"
         android:gravity="center"
         android:text=""
-        android:textColor="#FFFFFF"
+        android:textColor="@color/text_primary"
         android:textSize="18sp" />
 
     <FrameLayout
@@ -42,10 +42,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:background="#CC000000"
+            android:background="@color/overlay_black"
             android:padding="14dp"
-            android:text="Nalagam radarsko sliko ..."
-            android:textColor="#FFFFFF"
+            android:text="@string/map_radar_loading"
+            android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:visibility="visible" />
 
@@ -55,7 +55,7 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:layout_marginTop="20dp"
-        android:background="#252525"
+        android:background="@color/bottom_nav_bg"
         android:gravity="center"
         android:orientation="horizontal">
 
@@ -66,7 +66,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/nav_home"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="14sp" />
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/nav_map"
-            android:textColor="#FF9A7A"
+            android:textColor="@color/accent_peach"
             android:textSize="14sp" />
 
         <TextView
@@ -86,7 +86,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="@string/nav_profile"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/text_primary"
             android:textSize="14sp" />
 
     </LinearLayout>
