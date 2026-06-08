@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -61,11 +62,18 @@ public class TrailDetailsActivity extends AppCompatActivity {
         Button saveButton    = findViewById(R.id.saveButton);
         Button refreshButton = findViewById(R.id.refreshButton);
         Button aiButton      = findViewById(R.id.ullaButton);
+        Button deleteButton = findViewById(R.id.deleteButton);
 
         backButton.setOnClickListener(v -> finish());
 
         int trailIndex = getIntent().getIntExtra("trail_index", 0);
         Trail trail = TrailRepository.getTrails(this).get(trailIndex);
+
+        if (trail.gpxPath.startsWith("/")) {
+            deleteButton.setVisibility(View.VISIBLE);
+        } else {
+            deleteButton.setVisibility(View.GONE);
+        }
 
         trailName = trail.title;
         gpxPath   = trail.gpxPath;
@@ -130,6 +138,39 @@ public class TrailDetailsActivity extends AppCompatActivity {
             } else {
                 Toast.makeText(this, "Ta tura je že shranjena.", Toast.LENGTH_SHORT).show();
             }
+        });
+
+        deleteButton.setOnClickListener(v -> {
+
+            View dialogView = getLayoutInflater()
+                    .inflate(R.layout.dialog_delete_trail, null);
+
+            AlertDialog dialog = new AlertDialog.Builder(this)
+                    .setView(dialogView)
+                    .create();
+
+            if (dialog.getWindow() != null) {
+                dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+            }
+
+            Button cancelButton = dialogView.findViewById(R.id.cancelDeleteButton);
+            Button confirmButton = dialogView.findViewById(R.id.confirmDeleteButton);
+
+            cancelButton.setOnClickListener(x -> dialog.dismiss());
+
+            confirmButton.setOnClickListener(x -> {
+
+                TrailRepository.deleteTrail(this, trail);
+
+                Toast.makeText(this,
+                        R.string.delete_trail_success,
+                        Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
+                finish();
+            });
+
+            dialog.show();
         });
     }
 

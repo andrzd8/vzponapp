@@ -99,5 +99,11 @@
     <string name="experience_mountaineer_label">Gornik</string>
     <string name="experience_alpinist_label">Alpinist</string>
 
+    <string name="delete_trail_title">Izbriši pot</string>
+    <string name="delete_trail_message">Ali res želiš izbrisati to pot?</string>
+    <string name="delete_trail_confirm">Izbriši</string>
+    <string name="delete_trail_cancel">Prekliči</string>
+    <string name="delete_trail_success">Pot izbrisana</string>
+
 </resources>
 
