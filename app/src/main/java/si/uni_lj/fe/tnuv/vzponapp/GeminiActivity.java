@@ -35,9 +35,9 @@ import java.util.Locale;
 
 public class GeminiActivity extends AppCompatActivity {
 
-    private static final String API_KEY = "AQ.Ab8RN6J4iD2uj_cCL-WGxVpO1byuaqlMN5PSiL_Fx4_uSZZMIA";
+    private static final String API_KEY = BuildConfig.GEMINI_API_KEY;
     private static final String API_URL =
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.5-flash:generateContent?key=" + API_KEY;
+            "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite:generateContent?key=" + API_KEY;
 
     private LinearLayout equipmentContainer;
     private LinearLayout chatContainer;
@@ -117,17 +117,15 @@ public class GeminiActivity extends AppCompatActivity {
     // ── Equipment list z cachom ───────────────────────────────────────────────
 
     private void fetchEquipmentList() {
-        // Preveri cache
         String cached = prefs.getString(cacheKey, null);
         if (cached != null) {
             showCacheIndicator();
             parseAndShowList(cached);
-            addToHistory("user", buildEquipmentPrompt());  // history za chat
+            addToHistory("user", buildEquipmentPrompt());
             addToHistory("model", cached);
             return;
         }
 
-        // Ni v cachu → pokliči Gemini
         loadingBar.setVisibility(View.VISIBLE);
         callGemini(buildEquipmentPrompt(), true, text -> runOnUiThread(() -> {
             loadingBar.setVisibility(View.GONE);
@@ -135,7 +133,7 @@ public class GeminiActivity extends AppCompatActivity {
                 addEquipmentItem("⚠️ " + text);
                 return;
             }
-            prefs.edit().putString(cacheKey, text).apply();  // shrani v cache
+            prefs.edit().putString(cacheKey, text).apply();
             parseAndShowList(text);
         }));
     }
@@ -163,6 +161,17 @@ public class GeminiActivity extends AppCompatActivity {
         equipmentContainer.addView(cached);
     }
 
+    private void setFormattedText(TextView tv, String text) {
+        String html = text
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replaceAll("\\*\\*(.+?)\\*\\*", "<b>$1</b>")
+                .replaceAll("\\*(.+?)\\*", "<i>$1</i>")
+                .replaceAll("(?m)^[-•] (.+)$", "• $1")
+                .replace("\n", "<br/>");
+        tv.setText(android.text.Html.fromHtml(html, android.text.Html.FROM_HTML_MODE_COMPACT));
+    }
+
     private void addEquipmentItem(String text) {
         LinearLayout row = new LinearLayout(this);
         row.setOrientation(LinearLayout.HORIZONTAL);
@@ -173,7 +182,7 @@ public class GeminiActivity extends AppCompatActivity {
         cb.setButtonTintList(android.content.res.ColorStateList.valueOf(0xFF6BB5FF));
 
         TextView tv = new TextView(this);
-        tv.setText(text);
+        setFormattedText(tv, text);  // FIX: pravilen klic namesto deklaracije
         tv.setTextColor(0xFFFFFFFF);
         tv.setTextSize(15f);
         LinearLayout.LayoutParams p = new LinearLayout.LayoutParams(
@@ -223,7 +232,7 @@ public class GeminiActivity extends AppCompatActivity {
         wrapper.setLayoutParams(wp);
 
         TextView tv = new TextView(this);
-        tv.setText(text);
+        setFormattedText(tv, text);
         tv.setTextColor(0xFFFFFFFF);
         tv.setTextSize(14f);
         tv.setPadding(24, 14, 24, 14);

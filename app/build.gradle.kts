@@ -1,6 +1,11 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
 }
+
+val localProps = Properties()
+file("../local.properties").inputStream().use { localProps.load(it) }
 
 android {
     namespace = "si.uni_lj.fe.tnuv.vzponapp"
@@ -14,6 +19,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "GEMINI_API_KEY", "\"${localProps["gemini_api_key"]}\"")
+        buildConfigField("String", "WEATHER_API_KEY", "\"${localProps["weather_api_key"]}\"")
     }
 
     buildTypes {
@@ -25,6 +33,11 @@ android {
             )
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11

@@ -145,7 +145,7 @@
             android:textColor="#FFFFFF"
             android:backgroundTint="#1A3A52"
             android:padding="12dp"
-            android:inputType="textMultiLine"
+            android:inputType="textCapSentences|textMultiLine"
             android:maxLines="3" />
 
         <Button
