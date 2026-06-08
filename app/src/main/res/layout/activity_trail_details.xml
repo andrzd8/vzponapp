@@ -241,16 +241,6 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/mapButton"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/dialog_button_secondary"
-                android:text="@string/detail_open_map"
-                android:textColor="@color/text_primary"
-                android:textStyle="bold" />
-
-            <Button
                 android:id="@+id/deleteButton"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
